@@ -1,0 +1,11 @@
+Makefile
+comands.c
+includes
+libft
+main.c
+main.o
+minishell
+test
+test1
+utils.c
+utils.o
