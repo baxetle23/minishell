@@ -1,29 +1,12 @@
 #include "includes/minishell.h"
 
-t_cmd *many_redirect(t_cmd *cmd)
-{
-	t_cmd *redirect;
-	redirect = find_redirect(cmd);
-	while(redirect)
-	{
-		if (redirect->next && find_redirect(redirect))
-		{
-			open(redirect->arg[0], O_CREAT | O_TRUNC, 0664);
-			redirect = find_redirect(redirect);
-			continue ;
-		}
-		return redirect;
-	}
-	return redirect;
-}
-
 int	comand_echo(t_cmd *cmd)
 {
 	t_cmd	*redirect;
 	char	*tmp;
 	int		fd;
 
-	if (ft_strncmp_notregistr("-n", cmd->flags[1], ft_strlen(cmd->flags[1])))
+	if (ft_strncmp("-n", cmd->flags[1], ft_strlen(cmd->flags[1])))
 	{
 		tmp = cmd->arg[0];
 		cmd->arg[0] = ft_strjoin(tmp, "\n");
@@ -32,7 +15,13 @@ int	comand_echo(t_cmd *cmd)
 	redirect = many_redirect(cmd);
 	if (redirect)
 	{
-		fd = open(redirect->arg[0], O_CREAT | O_TRUNC | O_WRONLY, 0664);
+		if (ft_strncmp(redirect->name, ">>", 3))
+			fd = open(redirect->arg[0], O_CREAT | O_TRUNC | O_WRONLY, 0664);
+		else
+		{
+			fd = open(redirect->arg[0], O_CREAT | O_WRONLY | O_APPEND, 0664);
+			printf("%s\n", redirect->name);
+		}
 		if (fd < 0)
 		{
 			printf("ERROR OPEN FILE\n");
