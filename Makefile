@@ -2,7 +2,7 @@ NAME 			= minishell
 
 HEADER			= ./includes/minishell.h
 
-SRCS			=	main.c utils.c
+SRCS			=	main.c utils.c comands.c find.c
 
 OBJS			= $(SRCS:.c=.o)
 %.o:			%.c ${HEADER}
