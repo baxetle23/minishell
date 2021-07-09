@@ -4,16 +4,17 @@ int	init_comand(t_cmd *cmd, int argc, char **argv)
 {
 	// name "minishell" dont add to struct
 	int i = 1;
-	cmd->name = ft_strdup("echo");
+	cmd->name = ft_strdup("echo"); // <-------------- NAME COMAND
 	
 	cmd->arg = (char **)malloc(sizeof(char *) * 2);
 	cmd->arg[1] = NULL;
-	cmd->arg[0] =ft_strdup("test_argument");
+	cmd->arg[0] =ft_strdup("test_argument"); // <------------- ARG COMAND
 	cmd->flags = (char **)malloc(sizeof(char *) * 3);
 	cmd->flags[2] = NULL;
-	cmd->flags[1] = ft_strdup("-nd");
+	cmd->flags[1] = ft_strdup("-n"); // <---------------- FLAG COMAND
 	cmd->flags[0] = ft_strdup(cmd->name);
 
+	//next comands
 	t_cmd	*redirect;
 	redirect = (t_cmd *)malloc(sizeof(t_cmd));
 	redirect->name = ft_strdup(">");
@@ -24,7 +25,7 @@ int	init_comand(t_cmd *cmd, int argc, char **argv)
 
 	t_cmd *redirect2;
 	redirect2 = (t_cmd *)malloc(sizeof(t_cmd));
-	redirect2->name = ft_strdup(">>");
+	redirect2->name = ft_strdup(">");
 	redirect2->arg = (char **)malloc(sizeof(char *) * 2); 
 	redirect2->arg[1] = NULL;
 	redirect2->arg[0] = ft_strdup("test_file3.txt");
