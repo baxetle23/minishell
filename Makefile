@@ -1,6 +1,6 @@
 NAME	= minishell
 
-SORCES	= minishell.c ft_environments.c ft_str_utils.c ft_lst_utils.c ft_utils.c
+SORCES	= minishell.c ft_checks.c ft_environments.c ft_str_utils.c ft_lst_utils.c ft_utils.c
 
 DIRS	= ./src
 

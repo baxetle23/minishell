@@ -44,6 +44,14 @@
 # define INFINITY "\xE2\x99\xBE"
 # define KIRPICH "\xE2\x9B\x94"
 
+typedef struct s_words
+{
+	char			*word;
+	struct s_words	*next;
+	
+} t_words;
+
+
 typedef struct	s_env
 {
 	char			*key;
@@ -51,11 +59,29 @@ typedef struct	s_env
 	struct s_env	*next;
 } t_env;
 
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**flags;
+	char			**args;
+	struct s_cmd	*next;
+} t_cmd;
+
+
+int		ft_checkline(char *line, t_env **env, t_cmd **cmd);
+
 char	*ft_strdup_part(const char *s1, int start, int len);
+char	*ft_strjoin_m(char *s1, char *s2);
 
 void	ft_add_env(t_env **lst, t_env *new);
 t_env	*ft_lstnew_env(char *s);
 void	ft_lstclear_env(t_env **env);
+char	*ft_env_search(char *find, t_env **env);
+
+t_words	*ft_lstnew_word(char *s);
+void	ft_lstadd_word(t_words **lst, t_words *new);
+int		ft_addword(char *word, t_words **lst);
+void	ft_lstclear_words(t_words **env);
 
 void	ft_terminate(char *s);
 int		ft_put_caption(void);
