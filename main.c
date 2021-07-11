@@ -17,7 +17,7 @@ int	init_comand(t_cmd *cmd, int argc, char **argv)
 	// //next comands
 	// t_cmd	*redirect;
 	// redirect = (t_cmd *)malloc(sizeof(t_cmd));
-	// redirect->name = ft_strdup("-");
+	// redirect->name = ft_strdup(">");
 	// redirect->arg = (char **)malloc(sizeof(char *) * 2); 
 	// redirect->arg[1] = NULL;
 	// redirect->arg[0] = ft_strdup("test_file1.txt");
@@ -39,10 +39,28 @@ int	init_comand(t_cmd *cmd, int argc, char **argv)
 	cmd->arg[3] = NULL;
 	cmd->arg[2] = NULL;
 	cmd->arg[1] = NULL; // <------------- ARG COMAND
-	cmd->arg[0] =  NULL; // <------------- ARG COMAND
+	cmd->arg[0] = ft_strdup("test"); // <------------- ARG COMAND
 	cmd->flags = (char **)malloc(sizeof(char *) * 2);
 	cmd->flags[1] = NULL;
 	cmd->flags[0] = ft_strdup(cmd->name);
+
+	t_cmd	*redirect;
+	redirect = (t_cmd *)malloc(sizeof(t_cmd));
+	redirect->name = ft_strdup(">");
+	redirect->arg = (char **)malloc(sizeof(char *) * 2); 
+	redirect->arg[1] = NULL;
+	redirect->arg[0] = ft_strdup("test_file1.txt");
+	cmd->next = redirect;
+
+	t_cmd *redirect2;
+	redirect2 = (t_cmd *)malloc(sizeof(t_cmd));
+	redirect2->name = ft_strdup(">");
+	redirect2->arg = (char **)malloc(sizeof(char *) * 2); 
+	redirect2->arg[1] = NULL;
+	redirect2->arg[0] = ft_strdup("test_file3.txt");
+	redirect->next = redirect2;
+	redirect2->next = NULL;
+
 	//--------------------------------------------
 
 	// cmd->name = ft_strdup("pwd"); // <-------------- NAME COMAND pwd
@@ -58,7 +76,7 @@ int	init_comand(t_cmd *cmd, int argc, char **argv)
 
 	// t_cmd	*redirect;
 	// redirect = (t_cmd *)malloc(sizeof(t_cmd));
-	// redirect->name = ft_strdup("-");
+	// redirect->name = ft_strdup(">");
 	// redirect->arg = (char **)malloc(sizeof(char *) * 2); 
 	// redirect->arg[1] = NULL;
 	// redirect->arg[0] = ft_strdup("test_file1.txt");
@@ -73,6 +91,8 @@ int	init_comand(t_cmd *cmd, int argc, char **argv)
 	// redirect->next = redirect2;
 	// redirect2->next = NULL;
 	//--------------------------------------------
+
+
 
 	return (0);
 }
@@ -108,5 +128,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_get_list_environments(envp, &env); // <------- SEREGA DELAET
 	
 
+	//print_envp(env);
 	find_comand(&cmd, env);
+	//print_envp(env);
 }

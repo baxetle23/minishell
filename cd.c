@@ -22,54 +22,62 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 	char oldpath[10000];
 
 
+
 	if (count_arg_cd(cmd) && count_arg_cd(cmd) != 1)
 	{
-		//произошла ошибка
+		//mistake
 		printf("cd: %s: No such file or directory\n", cmd->arg[0]);
+		char **buffer;
+		buffer = (char **)malloc(sizeof(char *) * 1);
+		buffer[0] = NULL;
+		output_to_fd(buffer, cmd);
 		return (1);
 	}
-	if (!find_list_envp("OLDPWD", envp))
+	if (!((ft_get_list_env("OLDPWD", &envp))->value))
 	{
-		//первый вызов cd
+		//first call cd
+
 		if (count_arg_cd(cmd) == 1)
-		{
+		{	
 			getcwd(oldpath, 10000);
-			tmp = find_list_envp("OLDPWD", envp);
+			tmp = ft_get_list_env("OLDPWD", &envp);
 			tmp->value = ft_strdup(oldpath);
 			if (!chdir(cmd->arg[0])) {
-				tmp = find_list_envp("PWD", envp);
+				tmp = ft_get_list_env("PWD", &envp);
 				free(tmp->value);
 				getcwd(oldpath, 10000);
 				tmp->value = ft_strdup(oldpath);
 			}
 			else
-				//вернуть значение OLDPWD!!!!!!!!!
+				//comeback olDPWD!!!!
 				printf("cd: %s: No such file or directory\n", cmd->arg[0]);
 		}
 		else
 		{
-			t_env *tmp_home = find_list_envp("HOME", envp);
+			//write(1, "test\n", 5);
+			t_env *tmp_home = ft_get_list_env("HOME", &envp);
 			getcwd(oldpath, 10000);
-			tmp = find_list_envp("OLDPWD", envp);
+			tmp = ft_get_list_env("OLDPWD", &envp);
 			tmp->value = ft_strdup(oldpath);
-			tmp = find_list_envp("PWD", envp);
+			tmp = ft_get_list_env("PWD", &envp);
 			free(tmp->value);
 			tmp->value = ft_strdup(tmp_home->value);
-			print_envp(envp);
+			
 		}
 	}
 	else
 	{
-		//есть OLDPWD
+		//OLDPWD not NULL
 		if (count_arg_cd(cmd) == 1)
 		{
-			//указан путь
+						
+			//have argument
 			getcwd(oldpath, 10000);
-			tmp = find_list_envp("OLDPWD", envp);
+			tmp = ft_get_list_env("OLDPWD", &envp);
 			free (tmp->value);
 			tmp->value = ft_strdup(oldpath);
 			if (!chdir(cmd->arg[0])) {
-				tmp = find_list_envp("PWD", envp);
+				tmp = ft_get_list_env("PWD", &envp);
 				free(tmp->value);
 				getcwd(oldpath, 10000);
 				tmp->value = ft_strdup(oldpath);
@@ -79,17 +87,22 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 		}
 		else
 		{
-			//home directoria
-			t_env *tmp_home = find_list_envp("HOME", envp);
+			write(1, "test\n", 5);
+			//go to home directoria
+			t_env *tmp_home = ft_get_list_env("HOME", &envp);
 			getcwd(oldpath, 10000);
-			tmp = find_list_envp("OLDPWD", envp);
+			tmp = ft_get_list_env("OLDPWD", &envp);
 			free (tmp->value);
 			tmp->value = ft_strdup(oldpath);
-			tmp = find_list_envp("PWD", envp);
+			tmp = ft_get_list_env("PWD", &envp);
 			free(tmp->value);
 			tmp->value = ft_strdup(tmp_home->value);
 		}
-		print_envp(envp);
 	}
+
+	char **buffer;
+	buffer = (char **)malloc(sizeof(char *) * 1);
+	buffer[0] = NULL;
+	output_to_fd(buffer, cmd);
 	return (0);
 }

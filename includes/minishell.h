@@ -29,6 +29,8 @@ int	comand_env(t_cmd *cmd);
 int	comand_exit(t_cmd *cmd);
 int	comand_redirect(t_cmd *cmd);
 
+
+int		output_to_fd(char **buffer, t_cmd *cmd);
 t_cmd	*find_redirect(t_cmd *cmd);
 t_cmd	*many_redirect(t_cmd *cmd);
 
