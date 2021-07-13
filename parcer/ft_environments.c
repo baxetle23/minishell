@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_env	*ft_get_list_env(char *find, t_env **env)
+t_env	*ft_find_list_env(char *find, t_env **env)
 {
 	t_env	*tmp;
 
@@ -31,21 +31,11 @@ int	ft_get_list_environments(char **e, t_env **env)
 		ft_add_env(env, new);
 	}
 
-	new = ft_get_list_env("OLDPWD", env);
+	new = ft_find_list_env("OLDPWD", env);
 	if (new)
-		new->value = NULL;
-	new = *env;
-	while (new)
 	{
-		printf("%s", new->key);
-		if (new->value)
-			printf("=%s\n",new->value);
-		else
-			printf("\n");
-		new = new->next;
+		free(new->value);
+		new->value = NULL;
 	}
-
-
 	return (1);
-
 }
