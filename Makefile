@@ -3,7 +3,7 @@ NAME 			= minishell
 HEADER			= ./includes/minishell.h
 
 SRCS			=	main.c utils.c comands.c output.c redirect.c echo.c cd.c ft_lst_utils.c \
-					pwd.c env.c
+					pwd.c env.c export.c
 
 OBJS			= $(SRCS:.c=.o)
 %.o:			%.c ${HEADER}

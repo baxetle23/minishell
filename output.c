@@ -1,6 +1,5 @@
 #include "includes/minishell.h"
 
-
 int	ft_putbuffer_fd(char **buffer, int fd, t_cmd *cmd)
 {
 	int i;
@@ -12,6 +11,7 @@ int	ft_putbuffer_fd(char **buffer, int fd, t_cmd *cmd)
 			write(fd, "\n", 1);
 		i++;
 	}
+	return (0);
 }
 
 int		output_to_fd(char **buffer, t_cmd *cmd)

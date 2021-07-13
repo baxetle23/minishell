@@ -140,10 +140,11 @@ int	ft_get_list_environments(char **e, t_env **env)
 void print_envp(t_env *envp)
 {
 	t_env *tmp = envp;
-	printf("__________PRINT ENVP_________\n");
+	printf(RED "__________PRINT ENVP_________\n" RESET);
 	while (tmp)
 	{
-		printf("%s=%s\n", tmp->key, tmp->value);
+		if (tmp->value)
+			printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 }

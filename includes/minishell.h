@@ -3,6 +3,14 @@
 #include <fcntl.h>
 #include "../libft/libft.h"
 
+# define RED     "\x1b[31m"
+# define GREEN   "\x1b[32m"
+# define YELLOW  "\x1b[33m"
+# define BLUE    "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN    "\x1b[36m"
+# define RESET   "\x1b[0m"
+
 typedef struct s_cmd
 {
 	char			*name;
@@ -23,9 +31,9 @@ int	ft_strncmp_notregistr(const char *s1, const char *s2, size_t n);
 int	comand_echo(t_cmd *cmd);
 int	comand_cd(t_cmd *cmd, t_env *envp);
 int	comand_pwd(t_cmd *cmd, t_env *envp);
-int	comand_export(t_cmd *cmd);
+int	comand_export(t_cmd *cmd, t_env *envp);
 int	comand_unset(t_cmd *cmd);
-int	comand_env(t_cmd *cmd);
+int	comand_env(t_cmd *cmd, t_env *envp);
 int	comand_exit(t_cmd *cmd);
 int	comand_redirect(t_cmd *cmd);
 
