@@ -1,40 +1,48 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mdenyse <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/18 10:25:52 by mdenyse           #+#    #+#             */
-/*   Updated: 2021/04/18 10:26:12 by mdenyse          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		i;
-	char	*res;
+static char	*ft_strnew(size_t size);
+static void	*ft_memalloc(size_t size);
 
-	if (s1 == NULL || s2 == NULL)
-		return (0);
-	res = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!res)
-		return (0);
+char	*ft_strjoin(const char *s1, const char *s2)
+{
+	char		*new_string;
+	size_t		i;
+	size_t		j;
+
 	i = 0;
-	while (*s1 != '\0')
+	j = 0;
+	if (!s1 || !s2)
+		return (0);
+	new_string = ft_strnew(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (new_string == NULL)
+		return (NULL);
+	while (s1[i] != '\0')
 	{
-		res[i] = *s1;
-		s1++;
+		new_string[i] = s1[i];
 		i++;
 	}
-	while (*s2 != '\0')
+	while (s2[j] != '\0')
 	{
-		res[i] = *s2;
-		s2++;
+		new_string[i] = s2[j];
 		i++;
+		j++;
 	}
-	res[i] = '\0';
-	return (res);
+	return (new_string);
+}
+
+char	*ft_strnew(size_t size)
+{
+	return ((char *)ft_memalloc(size + 1));
+}
+
+void	*ft_memalloc(size_t size)
+{
+	void	*pointer;
+
+	pointer = malloc(size);
+	if (pointer == NULL)
+		return (pointer);
+	ft_bzero(pointer, size);
+	return (pointer);
 }

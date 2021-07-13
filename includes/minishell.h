@@ -1,3 +1,4 @@
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -7,6 +8,7 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <signal.h>
+# include <fcntl.h>
 
 # define B_DARKGREY "\e[1;30m"
 # define B_RED "\e[1;31m"
@@ -17,14 +19,13 @@
 # define B_BLUESKY "\e[1;36m"
 # define B_WHITE "\e[1;37m"
 
-# define BLACK "\e[0;30m"
-# define RED "\e[0;31m"
-# define GREEN "\e[0;32m"
-# define YELLOW "\e[0;33m"
-# define BLUE "\e[0;34m"
-# define PERPLE "\e[0;35m"
-# define BLUESKY "\e[0;36m"
-# define GREY "\e[0;37m"
+# define RED     "\x1b[31m"
+# define GREEN   "\x1b[32m"
+# define YELLOW  "\x1b[33m"
+# define BLUE    "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN    "\x1b[36m"
+# define RESET   "\x1b[0m"
 
 # define MANGEKENGOO "\xF0\x9F\x91\xBA:"
 # define EYES "\xF0\x9F\x81\x6E:"
@@ -59,6 +60,7 @@ typedef struct	s_env
 	char			*key;
 	char			*value;
 	struct s_env	*next;
+
 } t_env;
 
 typedef struct s_cmd
@@ -86,7 +88,7 @@ int		ft_simbols_in_word(char *word);
 int		ft_check_acitve(t_words **words, int start);
 int		ft_count_red(t_words **words, int start);
 
-void	ft_get_commands(t_words **words, char *line);
+void	ft_get_commands(t_words **words, char *line, t_cmd **cmd);
 
 int		ft_simbols_in_word(char *word);
 t_cmd	*ft_lstnew_cmd(char *cmd, char **flags, char **args);
@@ -112,5 +114,42 @@ void	ft_pipe(int *i, char *line, t_words **words);
 void	ft_free_mas(char **t);
 void	ft_terminate(char *s);
 int		ft_get_list_environments(char **e, t_env **env);
+t_env	*ft_find_list_env(char *find, t_env **env);
 
+
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------
+int	mainalex(t_cmd **cmd_adres, t_env **env);
+
+int	ft_strncmp_notregistr(const char *s1, const char *s2, size_t n);
+
+int	comand_echo(t_cmd *cmd);
+int	comand_cd(t_cmd *cmd, t_env *envp);
+int	comand_pwd(t_cmd *cmd, t_env *envp);
+int	comand_export(t_cmd *cmd, t_env *envp);
+int	comand_unset(t_cmd *cmd);
+int	comand_env(t_cmd *cmd, t_env *envp);
+int	comand_exit(t_cmd *cmd);
+int	comand_redirect(t_cmd *cmd);
+
+
+int		output_to_fd(char **buffer, t_cmd *cmd);
+t_cmd	*find_redirect(t_cmd *cmd);
+t_cmd	*many_redirect(t_cmd *cmd);
+
+//--------------------------------------------------------
+// int		ft_get_list_environments(char **e, t_env **env);
+//  t_env	*ft_get_list_env(char *find, t_env **env);
+// char	*ft_env_search(char *find, t_env **env);
+void	print_envp(t_env *envp);
+void	print_comand_arg(t_cmd *cmd);
+//t_env	*find_list_envp(const char * key, t_env *envp);
 #endif

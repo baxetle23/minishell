@@ -117,7 +117,7 @@ int	ft_checkline(char *line, t_env **env, t_cmd **cmd)
 	t_words	*words;
 	t_words	*tmp;
 	char	*res_word;
-	(void) cmd;
+//	(void) cmd;
 
 	i = 0;
 	words = NULL;
@@ -166,12 +166,21 @@ int	ft_checkline(char *line, t_env **env, t_cmd **cmd)
 	tmp = words;
 
 //	ft_fill_activity(&words, line);
-	ft_print_lst_words(&words);
+//	ft_print_lst_words(&words);
 
-	ft_get_commands(&words, line);
+//	t_cmd *cmd;
 
-	free(line);
-	ft_lstclear_words(&words);
+//	cmd = NULL;
+	ft_get_commands(&words, line, cmd);
+
 	
+	ft_print_lst_cmds(cmd);
+	
+
+	mainalex(cmd, env);
+	
+	free(line);
+	//ft_lstclear_words(&words);
+	ft_lstclear_cmds(cmd);
 	return (1);
 }

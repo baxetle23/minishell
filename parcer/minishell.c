@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **envir)
 */	
 	while (1)
 	{
+		cmd = NULL;
 		//ft_minishell(readline("\e[1;31mminishell\xF0\x9F\x91\x80:\e[0;37m"), &env, &cmd);
 		//write(1 ,"\e[1;31mminishell\xF0\x9F\x91\x80:\e[0;37m", 29);
 		//printf("-%s-", readline("\xF0\x9F\x91\x80:"));

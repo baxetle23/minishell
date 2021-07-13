@@ -1,26 +1,22 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mdenyse <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 18:06:16 by mdenyse           #+#    #+#             */
-/*   Updated: 2021/04/17 18:06:18 by mdenyse          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "libft.h"
 
+static void	*ft_memalloc(size_t size);
+
 void	*ft_calloc(size_t count, size_t size)
 {
-	size_t			i;
-	unsigned char	*res;
+	return (ft_memalloc(count * size));
+}
 
-	i = 0;
-	res = malloc(count * size);
-	if (!res)
-		return (0);
-	ft_memset(res, 0, count * size);
-	return ((void *)res);
+void	*ft_memalloc(size_t size)
+{
+	void	*pointer;
+
+	pointer = malloc(size);
+	if (pointer == NULL)
+	{
+		return (pointer);
+	}
+	ft_bzero(pointer, size);
+	return (pointer);
 }

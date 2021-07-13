@@ -1,40 +1,38 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mdenyse <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/17 13:29:44 by mdenyse           #+#    #+#             */
-/*   Updated: 2021/04/17 13:29:47 by mdenyse          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
-{
-	size_t			i;
-	unsigned char	*d;
-	unsigned char	*s;
+void	fun(char *a, const char *b, size_t *i);
 
-	if (dst == NULL && src == NULL)
-		return (0);
-	d = (unsigned char *)dst;
-	s = (unsigned char *)src;
-	if (d == s)
-		return (dst);
+void	*ft_memmove(void *to, const void *src, size_t n)
+{
+	char		*dest;
+	const char	*source;
+	size_t		i;
+
+	if (!to && !src && n)
+		return (NULL);
+	dest = (char *)to;
+	source = (const char *)src;
 	i = 0;
-	if (d > s)
-		while (len--)
-			d[len] = s[len];
+	if (dest <= source)
+	{
+		while (i < n)
+			fun(&dest[i], &source[i], &i);
+	}
 	else
 	{
-		while (i < len)
+		i = n;
+		while (i > 0)
 		{
-			d[i] = s[i];
-			i++;
+			dest[i - 1] = source[i - 1];
+			i--;
 		}
 	}
-	return (dst);
+	return (dest);
+}
+
+void	fun(char *a, const char *b, size_t *i)
+{
+	*a = *b;
+	*i += 1;
 }

@@ -167,7 +167,7 @@ int	ft_get_count_args(t_words **words, int	list_start, int flags_count) //исп
 	return (i);
 }
 
-void	ft_get_commands(t_words **words, char *line)
+void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 {
 	(void)	line;
 	t_cmd	*cmd;
@@ -179,7 +179,7 @@ void	ft_get_commands(t_words **words, char *line)
 	int		start;
 	int		old_start;
 
-	start_cmd = NULL;
+	//start_cmd = *cmd_input;
 	cmd = NULL; // can be delete;
 	start = 0;
 	while (start < ft_lst_words_length(words))
@@ -193,7 +193,7 @@ void	ft_get_commands(t_words **words, char *line)
 		{
 			start = start + 1;
 			cmd = ft_lstnew_cmd(command, NULL, NULL);
-			ft_lstadd_cmd(&start_cmd, cmd);
+			ft_lstadd_cmd(cmd_input, cmd);
 		}
 		else
 		{
@@ -211,7 +211,7 @@ void	ft_get_commands(t_words **words, char *line)
 					tmp = cmd->cmd;
 					cmd->cmd = ft_strdup(cmd->flags[0]);
 					free(tmp);
-					ft_lstadd_cmd(&start_cmd, cmd);
+					ft_lstadd_cmd(cmd_input, cmd);
 			}
 			else
 				free(command);
@@ -223,6 +223,6 @@ void	ft_get_commands(t_words **words, char *line)
 		printf("next start from: %d\n", start);
 	}
 	printf("\nPRINT\n");
-	ft_print_lst_cmds(&start_cmd);
-	ft_lstclear_cmds(&start_cmd);
+//	ft_print_lst_cmds(&start_cmd);
+//	ft_lstclear_cmds(&start_cmd);
 }
