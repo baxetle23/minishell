@@ -1,6 +1,5 @@
 #include "../includes/minishell.h"
 
-
 char	**ft_get_flags(t_words **words, int start, int flags_count)
 {
 	char	**res;
@@ -37,8 +36,6 @@ char	**ft_get_args(t_words **words, int start, int flags_count, int args_count)
 	t_words	*tmp;
 	int		i;
 
-//	if (!args_count)
-//		return (NULL);
 	tmp = *words;
 	i = start;
 

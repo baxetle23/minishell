@@ -7,8 +7,9 @@ int	ft_putbuffer_fd(char **buffer, int fd, t_cmd *cmd)
 	while(buffer[i])
 	{
 		ft_putstr_fd(buffer[i], fd);
-		if (ft_strncmp_notregistr("echo", cmd->cmd, ft_strlen(cmd->cmd)))
-			write(fd, "\n", 1);
+		if (!ft_strncmp_notregistr("echo", cmd->cmd, ft_strlen(cmd->cmd)))
+			if (buffer[i + 1] != NULL)
+				write(fd, " ", 1);
 		i++;
 	}
 	return (0);
@@ -20,7 +21,6 @@ int		output_to_fd(char **buffer, t_cmd *cmd)
 	int		fd;
 	t_cmd	*redirect;
 
-//	print_comand_arg(cmd);
 	redirect = many_redirect(cmd);
 	if (redirect)
 	{
