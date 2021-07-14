@@ -1,15 +1,27 @@
 #include "../includes/minishell.h"
-#include <unistd.h>
 
 void	ft_get_signals(int id)
 {
 	if (id == SIGINT)
 	{
+		
 	//	rl_on_new_line();
-	//	rl_replace_line();
 	//	rl_redisplay();
-		printf("\x1b[2D");
-		printf("\n");
+	//	write(1, EYESES, 5);
+	//	rl_replace_line("", 0);
+	//	rl_on_new_line();
+		
+	//	rl_replace_line("", 0);
+		write(1, "\n", 2);
+	//	rl_redisplay();
+		
+	//	printf(EYESES);
+
+	//	rl_on_new_line();
+		
+	//	rl_redisplay();
+	//	printf("\x1b[2D");
+		
 	}
 	if (id == SIGQUIT)
 	{
@@ -43,10 +55,12 @@ int	main(int argc, char **argv, char **envir)
 	if (!ft_get_list_environments(envir, &env))
 		ft_terminate("malloc error");
 
-		signal(SIGINT, ft_get_signals);
-		sigignore(SIGQUIT);
-		//signal(SIGQUIT, ft_get_signals);
+	signal(SIGINT, ft_get_signals);
+	sigignore(SIGQUIT);
+	//signal(SIGQUIT, ft_get_signals);
 
+
+	//errno = 83;
 	while (1)
 	{
 		cmd = NULL;

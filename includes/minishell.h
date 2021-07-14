@@ -9,6 +9,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <sys/errno.h>
 
 # define B_DARKGREY "\e[1;30m"
 # define B_RED "\e[1;31m"

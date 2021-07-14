@@ -4,10 +4,21 @@ char	*ft_dollar(int *i, char *line, t_env **env)
 {
 	int		j;
 	char	*find;
-	(void)	env;
 
 	j = *i + 1;
-	while ((ft_isalpha(line[j]) || ft_isdigit(line[j])) && line[j] != '\0')
+	if (line[j] == '$')
+	{
+		*i = j + 1;
+		return(ft_strdup(ft_itoa(getpid())));
+	}
+	j = *i + 1;
+	if (line[j] == '?')
+	{
+		*i = j + 1;
+		printf("errno = %d, name = %s", errno, strerror(errno));
+		return(ft_strdup(ft_itoa(errno)));
+	}
+	while ((ft_isalpha(line[j]) || ft_isdigit(line[j]) || line[j] == '_') && line[j] != '\0')
 		j++;
 	find = ft_strdup_part(line, *i + 1, j - *i - 1);
 	if(line[*i] != '\0')
