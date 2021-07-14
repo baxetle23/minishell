@@ -5,18 +5,24 @@ int	comand_echo(t_cmd *cmd)
 	char	**buffer;
 	char	*tmp;
 
-write(1, "testecho\n", 9);
+	int i = 0;
+	while (cmd->args[i])
+		i++;
+
+	buffer = (char **)malloc(sizeof(char *) * (i + 1));
+	buffer[i] = NULL;
+	i = 0;
+	while (cmd->args[i])
+	{
+		buffer[i] = ft_strdup(cmd->args[i]);
+		i++;
+	}
 	if (ft_strcmp("-n", cmd->flags[1]))
 	{
-		write(1, "testecho\n", 9);
-		tmp = cmd->args[0];
-		cmd->args[0] = ft_strjoin(tmp, "\n");
+		tmp = buffer[i - 1];
+		buffer[i - 1] = ft_strjoin(tmp, "\n");
 		free(tmp);
 	}
-	buffer = (char **)malloc(sizeof(char *) * 2);
-	buffer[1] = NULL;
-	buffer[0] = ft_strdup(cmd->args[0]);
-	
 	output_to_fd(buffer, cmd);
 	return (0);
 }

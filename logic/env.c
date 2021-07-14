@@ -30,7 +30,6 @@ int	output_to_fd_for_env(t_env *env, t_cmd *cmd)
 	int		fd;
 	t_cmd	*redirect;
 
-	
 	redirect = many_redirect(cmd);
 	if (redirect)
 	{
@@ -56,7 +55,6 @@ int	output_to_fd_for_env(t_env *env, t_cmd *cmd)
 
 int	comand_env(t_cmd *cmd, t_env *env)
 {
-	
-	output_to_fd_for_env(env, cmd);
+	print_sort_envp(env, cmd);
 	return (0);
 }
