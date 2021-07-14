@@ -42,13 +42,11 @@ int	main(int argc, char **argv, char **envir)
 
 	if (!ft_get_list_environments(envir, &env))
 		ft_terminate("malloc error");
-/*	while (1)
-	{
+
 		signal(SIGINT, ft_get_signals);
 		sigignore(SIGQUIT);
 		//signal(SIGQUIT, ft_get_signals);
-	}
-*/	
+
 	while (1)
 	{
 		cmd = NULL;

@@ -27,7 +27,6 @@ char	**ft_get_flags(t_words **words, int start, int flags_count)
 			tmp = tmp->next;
 		}
 	}
-//	write(1, "yep!", 4);
 	res[i] = NULL;
 	return (res);
 }
@@ -38,8 +37,8 @@ char	**ft_get_args(t_words **words, int start, int flags_count, int args_count)
 	t_words	*tmp;
 	int		i;
 
-	if (!args_count)
-		return (NULL);
+//	if (!args_count)
+//		return (NULL);
 	tmp = *words;
 	i = start;
 
@@ -216,13 +215,13 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 			else
 				free(command);
 			printf("count of red: %d\n", ft_count_red(words, start));
-			ft_add_all_redirects(words, old_start, &start_cmd);
+			ft_add_all_redirects(words, old_start, cmd_input);
 
 			start = start + flags_count + args_count + ft_count_red(words, old_start);
 		}
 		printf("next start from: %d\n", start);
 	}
 	printf("\nPRINT\n");
-//	ft_print_lst_cmds(&start_cmd);
+//	ft_print_lst_cmds(cmd_input);
 //	ft_lstclear_cmds(&start_cmd);
 }
