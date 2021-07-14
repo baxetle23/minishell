@@ -177,7 +177,7 @@ int	ft_checkline(char *line, t_env **env, t_cmd **cmd)
 	ft_print_lst_cmds(cmd);
 	
 
-///////////////////////////	mainalex(cmd, env);
+	mainalex(cmd, env);
 	
 	free(line);
 	ft_lstclear_words(&words);
