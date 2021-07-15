@@ -157,7 +157,7 @@
 // }
 
 
-int	find_comand(t_cmd *cmd, t_env *envp)
+int	find_comand(t_cmd *cmd, t_env *envp, t_env **o_env)
 {
 	if (!ft_strncmp_notregistr("echo", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_echo(cmd);
@@ -176,20 +176,18 @@ int	find_comand(t_cmd *cmd, t_env *envp)
 	if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)) ||
 		!ft_strncmp_notregistr("<<", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_redirect(cmd);
-	comand_exve(cmd, envp);
+	comand_exve(cmd, envp, o_env);
 	return (0);
 }
 
 
-int	mainalex(t_cmd **cmd_adres, t_env **env_adres, t_env **origin_env)
+int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 {
 
 	t_cmd *cmd = *cmd_adres;
 	t_env *env = *env_adres;
-	t_env **origin_env;
 	// print_comand_arg(*cmd_adres);
-	origin_env = creat_copy_envp(env_adres);
-	find_comand(cmd, env);
+	find_comand(cmd, env, origin_env);
 	//print_envp(env);
 	return (0);
 }
