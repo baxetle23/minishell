@@ -51,10 +51,9 @@ void call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 
 
 	fd = find_file_des(cmd);
-	write(1, &fd, sizeof(fd));
 	if (fd < 0)
 		exit (1);
-	dup2(fd, STDIN_FILENO);
+	dup2(fd, STDOUT_FILENO);
 	name_programm = get_addres(o_env, cmd->cmd);
 	execve(name_programm, cmd->flags, o_env);
 	exit (1);
