@@ -12,6 +12,15 @@ void	ft_free_mas(char **t)
 	free(t);
 }
 
+char	**get_empty_m(void)
+{
+	char	**tmp;
+
+	tmp = (char **)malloc(sizeof(char *));
+	tmp[0] = NULL;
+	return (tmp);
+}
+
 void	ft_terminate(char *s)
 {
 	ft_putstr_fd(s, 2);

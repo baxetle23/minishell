@@ -73,7 +73,7 @@ typedef struct s_cmd
 } t_cmd;
 
 
-int		ft_checkline(char *line, t_env **env, t_cmd **cmd);
+int		ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir);
 
 char	*ft_strdup_part(const char *s1, int start, int len);
 char	*ft_strjoin_m(char *s1, char *s2);
@@ -112,6 +112,7 @@ void	ft_lstclear_words(t_words **env);
 void	ft_switch_spaces(int *i, char *line);
 void	ft_pipe(int *i, char *line, t_words **words);
 
+char	**get_empty_m(void);
 void	ft_free_mas(char **t);
 void	ft_terminate(char *s);
 int		ft_get_list_environments(char **e, t_env **env);

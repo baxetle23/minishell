@@ -29,7 +29,7 @@ void	ft_get_signals(int id)
 	}
 }
 
-int	ft_minishell(char *line, t_env **env, t_cmd **cmd)
+int	ft_minishell(char *line, t_env **env, t_cmd **cmd, char **envir)
 {
 	if (line == NULL)
 	{
@@ -39,7 +39,7 @@ int	ft_minishell(char *line, t_env **env, t_cmd **cmd)
 	if (line[0] != '\0')
 	{
 		add_history(line);
-		if (ft_checkline(line, env, cmd))
+		if (ft_checkline(line, env, cmd, envir))
 			return (0);
 	}
 	return (1);
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envir)
 		//ft_minishell(readline("\e[1;31mminishell\xF0\x9F\x91\x80:\e[0;37m"), &env, &cmd);
 		//write(1 ,"\e[1;31mminishell\xF0\x9F\x91\x80:\e[0;37m", 29);
 		//printf("-%s-", readline("\xF0\x9F\x91\x80:"));
-		ft_minishell(readline(EYESES), &env, &cmd);
+		ft_minishell(readline(EYESES), &env, &cmd, envir);
 		//ft_minishell(readline("\x1b[1;37mminishell\xF0\x9F\x91\x80:"), &env, &cmd);
 	}
 	return (0);

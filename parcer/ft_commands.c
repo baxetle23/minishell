@@ -59,7 +59,6 @@ char	**ft_get_args(t_words **words, int start, int flags_count, int args_count)
 		}
 	}
 
-
 	res = (char **)malloc(sizeof(char *) * (args_count + 1));
 	i = 0;
 	while (i < args_count)
@@ -188,7 +187,7 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 		if (command[0] == '|')
 		{
 			start = start + 1;
-			cmd = ft_lstnew_cmd(command, NULL, NULL);
+			cmd = ft_lstnew_cmd(command, get_empty_m(), get_empty_m());
 			ft_lstadd_cmd(cmd_input, cmd);
 		}
 		else
