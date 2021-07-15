@@ -122,7 +122,7 @@ char	*ft_redir(int *i, char *line, t_words **words)
 	return (0);
 }
 
-int	ft_checkline(char *line, t_env **env, t_cmd **cmd)
+int	ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir)
 {
 	int		i;
 	t_words	*words;
@@ -188,7 +188,8 @@ int	ft_checkline(char *line, t_env **env, t_cmd **cmd)
 	ft_print_lst_cmds(cmd);
 	
 
-	//mainalex(cmd, env,);
+
+	mainalex(cmd, env, envir);
 	free(line);
 	ft_lstclear_words(&words);
 	ft_lstclear_cmds(cmd);

@@ -31,16 +31,15 @@ void	ft_add_all_redirects(t_words **words, int start, t_cmd **start_cmd)
 				args = (char **)malloc(sizeof(char **) * 2);
 				args[0] = ft_strdup(tmp->next->word);
 				args[1] = NULL;
-				cmd = ft_lstnew_cmd(ft_strdup(tmp->word), NULL, args);
+				cmd = ft_lstnew_cmd(ft_strdup(tmp->word), get_empty_m(), args);
 				start = start + 1;
 				tmp = tmp->next;
 			}
 			else
-				cmd = ft_lstnew_cmd(ft_strdup(tmp->word), NULL, NULL);
+				cmd = ft_lstnew_cmd(ft_strdup(tmp->word), get_empty_m(), get_empty_m());
 			ft_lstadd_cmd(start_cmd, cmd);
 		}
 		tmp = tmp->next;
-		
 	}
 }
 
