@@ -52,6 +52,6 @@ int	output_to_fd_for_env(t_env *env, t_cmd *cmd)
 
 int	comand_env(t_cmd *cmd, t_env *env)
 {
-	print_sort_envp(env, cmd);
+	print_sort_envp(env);
 	return (0);
 }

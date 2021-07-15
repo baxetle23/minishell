@@ -157,26 +157,26 @@
 // }
 
 
-int	find_comand(t_cmd *cmd, t_env *envp, t_env **o_env)
+int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 {
 	if (!ft_strncmp_notregistr("echo", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_echo(cmd);
-	if (!ft_strncmp_notregistr("cd", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_notregistr("cd", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_cd(cmd, envp);
-	if (!ft_strncmp_notregistr("pwd", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_notregistr("pwd", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_pwd(cmd, envp);
-	if (!ft_strncmp_notregistr("export", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_notregistr("export", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_export(cmd, envp);
-	if (!ft_strncmp_notregistr("unset", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_notregistr("unset", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_unset(cmd);
-	if (!ft_strncmp_notregistr("env", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_notregistr("env", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_env(cmd, envp);
-	if (!ft_strncmp_notregistr("exit", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_notregistr("exit", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_exit(cmd);
-	if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)) ||
+	else if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)) ||
 		!ft_strncmp_notregistr("<<", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_redirect(cmd);
-	comand_exve(cmd, envp, o_env);
+	else comand_exve(cmd, o_env);
 	return (0);
 }
 

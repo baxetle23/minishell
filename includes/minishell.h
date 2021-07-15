@@ -150,7 +150,7 @@ int	comand_unset(t_cmd *cmd);
 int	comand_env(t_cmd *cmd, t_env *envp);
 int	comand_exit(t_cmd *cmd);
 int	comand_redirect(t_cmd *cmd);
-int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
+int	comand_exve(t_cmd *cmd, char **o_env);
 
 
 int		output_to_fd(char **buffer, t_cmd *cmd);
@@ -162,4 +162,5 @@ int		find_file_des(t_cmd *cmd);
 
 void	print_envp(t_env *envp);
 void	print_comand_arg(t_cmd *cmd);
+void	print_sort_envp(t_env *envp);
 #endif
