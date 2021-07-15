@@ -17,29 +17,8 @@ int	ft_putbuffer_fd(char **buffer, int fd, t_cmd *cmd)
 
 int		output_to_fd(char **buffer, t_cmd *cmd)
 {
-	
 	int		fd;
-	t_cmd	*redirect;
-
-	redirect = many_redirect(cmd);
-	if (redirect)
-	{
-		
-		if (ft_strncmp(redirect->cmd, ">>", 3))
-			fd = open(redirect->args[0], O_CREAT | O_TRUNC | O_WRONLY, 0664);
-		else
-		{
-			fd = open(redirect->args[0], O_CREAT | O_WRONLY | O_APPEND, 0664);
-			printf("%s\n", redirect->cmd);
-		}
-		if (fd < 0)
-		{
-			printf("ERROR OPEN FILE\n");
-			return (1);
-		}
-		ft_putbuffer_fd(buffer, fd, cmd);
-	}
-	else
-		ft_putbuffer_fd(buffer, 1, cmd);
+	fd = find_file_des(cmd);
+	ft_putbuffer_fd(buffer, fd, cmd);
 	return (0);
 }

@@ -176,21 +176,19 @@ int	find_comand(t_cmd *cmd, t_env *envp)
 	if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)) ||
 		!ft_strncmp_notregistr("<<", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_redirect(cmd);
+	comand_exve(cmd, envp);
 	return (0);
 }
 
-int	mainalex(t_cmd **cmd_adres, t_env **env_adres)
+
+int	mainalex(t_cmd **cmd_adres, t_env **env_adres, t_env **origin_env)
 {
 
 	t_cmd *cmd = *cmd_adres;
 	t_env *env = *env_adres;
-	print_comand_arg(*cmd_adres);
-	if (cmd->args == NULL)
-	{
-		printf("Get memory for args[0]\n");
-		cmd->args = (char **)malloc(sizeof(char *) * 1);
-		cmd->args[0] = NULL;
-	}
+	t_env **origin_env;
+	// print_comand_arg(*cmd_adres);
+	origin_env = creat_copy_envp(env_adres);
 	find_comand(cmd, env);
 	//print_envp(env);
 	return (0);

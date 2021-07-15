@@ -128,7 +128,7 @@ t_env	*ft_find_list_env(char *find, t_env **env);
 
 
 //--------------------------------------------------------
-int	mainalex(t_cmd **cmd_adres, t_env **env);
+int	mainalex(t_cmd **cmd_adres, t_env **env, t_env **origin);
 
 int	ft_strncmp_notregistr(const char *s1, const char *s2, size_t n);
 
@@ -140,17 +140,16 @@ int	comand_unset(t_cmd *cmd);
 int	comand_env(t_cmd *cmd, t_env *envp);
 int	comand_exit(t_cmd *cmd);
 int	comand_redirect(t_cmd *cmd);
+int	comand_exve(t_cmd *cmd, t_env *envp);
 
 
 int		output_to_fd(char **buffer, t_cmd *cmd);
 t_cmd	*find_redirect(t_cmd *cmd);
 t_cmd	*many_redirect(t_cmd *cmd);
+int		find_file_des(t_cmd *cmd);
 
 //--------------------------------------------------------
-// int		ft_get_list_environments(char **e, t_env **env);
-//  t_env	*ft_get_list_env(char *find, t_env **env);
-// char	*ft_env_search(char *find, t_env **env);
+
 void	print_envp(t_env *envp);
 void	print_comand_arg(t_cmd *cmd);
-//t_env	*find_list_envp(const char * key, t_env *envp);
 #endif
