@@ -36,10 +36,7 @@ int	output_to_fd_for_env(t_env *env, t_cmd *cmd)
 		if (ft_strncmp(redirect->cmd, ">>", 3))
 			fd = open(redirect->args[0], O_CREAT | O_TRUNC | O_WRONLY, 0664);
 		else
-		{
 			fd = open(redirect->args[0], O_CREAT | O_WRONLY | O_APPEND, 0664);
-			printf("%s\n", redirect->cmd);
-		}
 		if (fd < 0)
 		{
 			printf("ERROR OPEN FILE\n");
