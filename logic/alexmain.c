@@ -176,7 +176,7 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 	else if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)) ||
 		!ft_strncmp_notregistr("<<", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_redirect(cmd);
-	else comand_exve(cmd, o_env);
+	else comand_exve(cmd, envp, o_env);
 	return (0);
 }
 

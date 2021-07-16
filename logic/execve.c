@@ -14,11 +14,12 @@ void	free_memory(char **split1, char **split2)
 	free(split1);
 }
 
-char	*get_addres(char **envp, char *cmd_string)
+char	*get_addres(char **envp, t_env *my_envp, char *cmd_string)
 {
 	t_pipex	a;
 
 	a.i = 0;
+	t_env *path = ft_find_list_env("PWD", &my_envp);
 	while (ft_strncmp(envp[a.i], "PATH=", 5))
 		a.i++;
 	a.strings_way = ft_split(envp[a.i] + 5, ':');
@@ -43,7 +44,7 @@ char	*get_addres(char **envp, char *cmd_string)
 	exit (5);
 }
 
-void call_execve_process(t_cmd *cmd, char **o_env)
+void call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 {
 	int fd;
 	char *name_programm;
@@ -52,12 +53,14 @@ void call_execve_process(t_cmd *cmd, char **o_env)
 	if (fd < 0)
 		exit (1);
 	dup2(fd, STDOUT_FILENO);
-	name_programm = get_addres(o_env, cmd->cmd);
-	execve(name_programm, cmd->flags, o_env);
+	name_programm = get_addres(o_env, envp, cmd->cmd);
+	int i = 0;
+	
+	execve(name_programm, cmd->flags, NULL);
 	exit (1);
 }
 
-int	comand_exve(t_cmd *cmd, char **o_env)
+int	comand_exve(t_cmd *cmd, t_env* envp, char **o_env)
 {
 	int pid;
 	pid = fork();
@@ -65,7 +68,7 @@ int	comand_exve(t_cmd *cmd, char **o_env)
 		exit (1);
 	if (pid == 0)
 	{
-		call_execve_process(cmd, o_env);
+		call_execve_process(cmd, envp, o_env);
 	}
 	wait(NULL);
 	return (0);
