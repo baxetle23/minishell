@@ -147,7 +147,7 @@ void print_comand_arg(t_cmd *cmd)
 void print_envp(t_env *envp)
 {
 	t_env *tmp = envp;
-	printf(RED "__________PRINT ENVP_________\n");
+	printf(RED "__________PRINT ENVP_________\n" RESET);
 	while (tmp)
 	{
 		if (tmp->value)

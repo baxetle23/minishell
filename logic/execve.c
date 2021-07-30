@@ -56,7 +56,7 @@ void call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 	name_programm = get_addres(o_env, envp, cmd->cmd);
 	int i = 0;
 	
-	execve(name_programm, cmd->flags, NULL);
+	execve(name_programm, cmd->flags, o_env);
 	exit (1);
 }
 
