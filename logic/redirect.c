@@ -2,7 +2,6 @@
 
 
 //проверять открытие файлов и доступ к ним - выводить ошибкуte
-
 t_cmd	*find_redirect(t_cmd *cmd)
 {
 	if (cmd->next)

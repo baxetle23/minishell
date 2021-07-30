@@ -2,9 +2,9 @@
 
 int	comand_pwd(t_cmd *cmd, t_env *env)
 {
-	
+	// если не находим PATH вызывает execve!
 	int i;
-	t_env *tmp;
+	t_env	*tmp;
 	char	**buffer;
 	char	*temp;
 

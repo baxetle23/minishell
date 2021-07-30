@@ -146,7 +146,7 @@ int	comand_echo(t_cmd *cmd);
 int	comand_cd(t_cmd *cmd, t_env *envp);
 int	comand_pwd(t_cmd *cmd, t_env *envp);
 int	comand_export(t_cmd *cmd, t_env *envp);
-int	comand_unset(t_cmd *cmd);
+int	comand_unset(t_cmd *cmd, t_env *envp);
 int	comand_env(t_cmd *cmd, t_env *envp);
 int	comand_exit(t_cmd *cmd);
 int	comand_redirect(t_cmd *cmd);
@@ -163,4 +163,7 @@ int		find_file_des(t_cmd *cmd);
 void	print_envp(t_env *envp);
 void	print_comand_arg(t_cmd *cmd);
 void	print_sort_envp(t_env *envp);
+
+
+void	ft_delete_list_env(char *key, t_env **env);
 #endif
