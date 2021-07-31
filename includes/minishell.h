@@ -150,13 +150,18 @@ int	comand_unset(t_cmd *cmd, t_env *envp);
 int	comand_env(t_cmd *cmd, t_env *envp);
 int	comand_exit(t_cmd *cmd);
 int	comand_redirect(t_cmd *cmd);
+int	comand_revers_redirect(t_cmd *cmd);
+int	comand_revers_dredirect(t_cmd *cmd);
 int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
 
-
+//redirect
 int		output_to_fd(char **buffer, t_cmd *cmd);
 t_cmd	*find_redirect(t_cmd *cmd);
 t_cmd	*many_redirect(t_cmd *cmd);
 int		find_file_des(t_cmd *cmd);
+//revers redirect
+t_cmd	*find_revers_redirect(t_cmd *cmd);
+int		find_infile_des(t_cmd *cmd);
 
 //--------------------------------------------------------
 

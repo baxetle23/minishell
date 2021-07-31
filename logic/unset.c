@@ -10,8 +10,6 @@ void	ft_delete_list_env(char *key, t_env **env)
 	{
 		if (!ft_strcmp(tmp->next->key, key))
 		{
-			printf("%s\n", key);
-			printf("%s\n", tmp->next->key);
 			if (tmp->next->key)
 				free(tmp->next->key);
 			if (tmp->next->value)
