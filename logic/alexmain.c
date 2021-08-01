@@ -5,24 +5,11 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 	// есть ли обратный редирект в списке команд
 	int fd_in = 0;
 	t_cmd *tmp = cmd;
-	// while (tmp->next)
-	// {
-	// 	if (!ft_strncmp_notregistr(">", tmp->cmd, ft_strlen(tmp->cmd)) ||
-	// 			!ft_strncmp_notregistr(">>", tmp->cmd, ft_strlen(tmp->cmd)))
-	// 	{
-	// 		tmp = tmp->next;
-	// 		continue ;
-	// 	}
-	// 	break ;
-	// }
 
 	if (ft_strncmp_notregistr("<", tmp->cmd, ft_strlen(tmp->cmd)) && find_revers_redirect(tmp))
 	{
 		printf("change fd_input begin\n");
-	// подменить stdin для дальнейших команд в случае ошибки прекратить выполнение этих команд
 		fd_in = find_infile_des(tmp);
-		// printf("%d fd\n", fd_in);
-		
 		if (!ft_strncmp_notregistr(">", cmd->next->cmd, ft_strlen(cmd->next->cmd)) ||
 		!ft_strncmp_notregistr(">>", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
 			find_file_des(tmp);
@@ -36,7 +23,7 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 		//add flags in output if they not valid
 		comand_echo(cmd);
 	else if (!ft_strncmp_notregistr("cd", cmd->cmd, ft_strlen(cmd->cmd)))
-		//+++
+		//+++ add tilda ~
 		comand_cd(cmd, envp);
 	else if (!ft_strncmp_notregistr("pwd", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++
@@ -53,7 +40,7 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 	else if (!ft_strncmp_notregistr("exit", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_exit(cmd);
 	else if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)))
-		//+
+		//+++
 		comand_revers_redirect(cmd);
 	else if (!ft_strncmp_notregistr("<<", cmd->cmd, ft_strlen(cmd->cmd)))
 		comand_revers_dredirect(cmd);
@@ -64,11 +51,10 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 	else comand_exve(cmd, envp, o_env);
 //-------------------------------------------
 
-	if (fd_in) {
-		dup2(STDIN_FILENO, fd_in);
+
+	if (fd_in)
 		close(fd_in);
-	}
-		
+
 
 	return (0);
 }
@@ -78,7 +64,17 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 {
 	t_cmd *cmd = *cmd_adres;
 	t_env *env = *env_adres;
-	find_comand(cmd, env, origin_env);
-	printf("work ends\n");
+	int	pid;
+
+	pid = fork();
+	if (pid < 0)
+		return (-1);
+	if (pid == 0)
+	{
+		find_comand(cmd, env, origin_env);
+		exit (0);
+	}
+	wait(NULL);
+	printf("%d\n", STDIN_FILENO);
 	return (0);
 }
