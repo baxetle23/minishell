@@ -2,6 +2,16 @@
 
 t_cmd *find_revers_redirect(t_cmd *cmd)
 {
+	while (cmd->next)
+	{
+		if (!ft_strncmp_notregistr(">", cmd->next->cmd, ft_strlen(cmd->next->cmd)) ||
+			!ft_strncmp_notregistr(">>", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
+		{
+			cmd = cmd->next;
+			continue ;
+		}
+		break ;
+	}
 	if (cmd->next)
 	{
 		if (!ft_strncmp_notregistr("<", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
@@ -24,18 +34,23 @@ int get_fd_rredirecta(t_cmd *redirect)
 
 int	find_infile_des(t_cmd *cmd)
 {
-	t_cmd *redirect;
+	t_cmd	*redirect;
+	int		fd;
+	
 	redirect = find_revers_redirect(cmd);
 	while(redirect)
 	{
 		if (redirect->next && find_revers_redirect(redirect))
 		{
-			if (open(redirect->args[0], O_RDONLY) < 0) 
+			fd = open(redirect->args[0], O_RDONLY);
+			if ( fd < 0) 
 			{
+				close(fd);
 				printf("%s: can't read file\n", redirect->args[0]);
 				return (-1);
 			}
-			redirect = find_revers_redirect(cmd);
+			close(fd);
+			redirect = find_revers_redirect(redirect);
 			continue ;
 		}
 		return get_fd_rredirecta(redirect);
@@ -45,17 +60,23 @@ int	find_infile_des(t_cmd *cmd)
 
 int	comand_revers_redirect(t_cmd *cmd)
 {
+	int	fd;
+
 	if (cmd->args[0] == NULL)
 	{
 		printf(" syntax error near unexpected token `newline'\n");
 		return (1);
 	}
-	if (open(cmd->args[0], O_RDONLY) < 0)
+	fd = open(cmd->args[0], O_RDONLY);
+	if (fd < 0)
 	{
 		printf("%s: can't read file\n", cmd->args[0]);
+		close(fd);
 		return (-1);
 	}
-	find_infile_des(cmd);
+	fd = find_infile_des(cmd);
+	if (fd > 2)
+		close(fd);
 	return (0);
 }
 

@@ -2,6 +2,15 @@
 
 t_cmd	*find_redirect(t_cmd *cmd)
 {
+	while (cmd->next)
+	{
+		if (!ft_strncmp_notregistr("<", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
+		{
+			cmd = cmd->next;
+			continue ;
+		}
+		break ;
+	}
 	if (cmd->next)
 	{
 		if (!ft_strncmp_notregistr(">", cmd->next->cmd, ft_strlen(cmd->next->cmd)) ||
@@ -56,6 +65,7 @@ int	find_file_des(t_cmd *cmd)
 {
 	int	fd;
 	t_cmd *redirect;
+
 	redirect = find_redirect(cmd);
 	while(redirect)
 	{
