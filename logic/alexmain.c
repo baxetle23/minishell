@@ -5,10 +5,10 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 	// есть ли обратный редирект в списке команд
 	int fd_in = 0;
 	t_cmd *tmp = cmd;
+	int save_stdin = dup(STDIN_FILENO);
 
 	if (ft_strncmp_notregistr("<", tmp->cmd, ft_strlen(tmp->cmd)) && find_revers_redirect(tmp))
 	{
-		printf("change fd_input begin\n");
 		fd_in = find_infile_des(tmp);
 		if (!ft_strncmp_notregistr(">", cmd->next->cmd, ft_strlen(cmd->next->cmd)) ||
 		!ft_strncmp_notregistr(">>", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
@@ -32,7 +32,7 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 		//+++
 		comand_export(cmd, envp);
 	else if (!ft_strncmp_notregistr("unset", cmd->cmd, ft_strlen(cmd->cmd)))
-		//++
+		//+++
 		comand_unset(cmd, envp);
 	else if (!ft_strncmp_notregistr("env", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++
@@ -52,29 +52,72 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 //-------------------------------------------
 
 
-	if (fd_in)
+	if (fd_in) {
 		close(fd_in);
-
+		dup2(save_stdin, 0);
+	}
 
 	return (0);
 }
-
 
 int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 {
 	t_cmd *cmd = *cmd_adres;
 	t_env *env = *env_adres;
-	int	pid;
 
-	pid = fork();
-	if (pid < 0)
-		return (-1);
-	if (pid == 0)
+	if (pipe_exist(cmd))
+	{
+		printf("PIPIPIPIPIPIPIP\n");
+		int		p[2];
+		pid_t	pid;
+		int		fd_in = 0;
+		int		i = 0;
+		t_cmd *tmp_cmd;
+		int	flag = 1;
+
+		tmp_cmd = cmd;
+		while(tmp_cmd)
+		{
+			pipe(p);
+			pid = fork();
+			if (pid < 0)
+				exit (0);
+			else if (pid == 0)
+			{
+				printf("test\n");
+				dup2(fd_in, 0); //?
+				if (next_pipe_exist(tmp_cmd))
+				{
+					printf("next exist\n");
+					dup2(p[1], 0);
+				}
+				close(p[0]);
+				find_comand(tmp_cmd, env, origin_env);
+				tmp_cmd = pipe_exist(tmp_cmd)->next;
+			}
+			else
+			{
+				wait(NULL);
+				close(p[1]);
+				fd_in = p[0];
+				// if (flag) {
+					tmp_cmd = pipe_exist(tmp_cmd);
+					flag = 0;
+				// }
+				// tmp_cmd = pipe_exist(tmp_cmd)->next;
+			}
+		}
+	
+
+		//find_comand(cmd, env, origin_env);
+	}
+	else
 	{
 		find_comand(cmd, env, origin_env);
-		exit (0);
 	}
-	wait(NULL);
-	printf("%d\n", STDIN_FILENO);
 	return (0);
 }
+
+
+// перекинуть arg команд nobildin в флаги
+// << realization

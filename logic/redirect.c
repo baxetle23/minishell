@@ -4,7 +4,8 @@ t_cmd	*find_redirect(t_cmd *cmd)
 {
 	while (cmd->next)
 	{
-		if (!ft_strncmp_notregistr("<", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
+		if (!ft_strncmp_notregistr("<", cmd->next->cmd, ft_strlen(cmd->next->cmd)) ||
+			!ft_strncmp_notregistr("<<", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
 		{
 			cmd = cmd->next;
 			continue ;

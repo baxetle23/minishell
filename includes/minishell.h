@@ -162,12 +162,16 @@ int		find_file_des(t_cmd *cmd);
 //revers redirect
 t_cmd	*find_revers_redirect(t_cmd *cmd);
 int		find_infile_des(t_cmd *cmd);
+//pipe
+t_cmd	*pipe_exist(t_cmd *cmd);
+t_cmd	*next_pipe_exist(t_cmd *cmd);
+
 
 //--------------------------------------------------------
 
-void	print_envp(t_env *envp);
+void	print_envp(t_env *envp, int fd);
 void	print_comand_arg(t_cmd *cmd);
-void	print_sort_envp(t_env *envp);
+void	print_sort_envp(t_env *envp, int fd);
 
 
 void	ft_delete_list_env(char *key, t_env **env);

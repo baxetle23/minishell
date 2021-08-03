@@ -52,6 +52,10 @@ int	output_to_fd_for_env(t_env *env, t_cmd *cmd)
 
 int	comand_env(t_cmd *cmd, t_env *env)
 {
-	print_envp(env);
+	int		fd;
+	fd = find_file_des(cmd);
+	if (fd < 0)
+		return (0);
+	print_envp(env, fd);
 	return (0);
 }

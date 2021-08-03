@@ -1,15 +1,24 @@
 #include "../includes/minishell.h"
 
-void print_sort_envp(t_env *envp)
+void print_sort_envp(t_env *envp, int fd)
 {
 	t_env *tmp = envp;
-	printf(RED "__________PRINT SORT ENVP_________\n" RESET);
 	while (tmp)
 	{
 		if (tmp->value)
-			printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
+		{
+			ft_putstr_fd("declare -x ", fd);
+			ft_putstr_fd(tmp->key, fd);
+			ft_putstr_fd("=\"", fd);
+			ft_putstr_fd(tmp->value, fd);
+			ft_putstr_fd("\"\n", fd);
+		}
 		else
-			printf("declare -x %s\n", tmp->key);
+		{
+			ft_putstr_fd("declare -x ", fd);
+			ft_putstr_fd(tmp->key, fd);
+			ft_putstr_fd("=\"\n", fd);
+		}
 		tmp = tmp->next;
 	}
 }
@@ -130,10 +139,15 @@ void add_variable(char *variable, t_env* env)
 
 int	comand_export(t_cmd *cmd, t_env *env)
 {
+	int	fd;
+	
+	fd = find_file_des(cmd);
+	if (fd < 0)
+		return (0);
 	if (!cmd->args[0]) {
 		// распечатать переменные
 		sort_env(env);
-		print_sort_envp(env);
+		print_sort_envp(env, fd);
 		return (0);
 	} else {
 		int i = -1;

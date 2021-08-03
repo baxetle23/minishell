@@ -16,14 +16,17 @@ void print_comand_arg(t_cmd *cmd)
 		
 }
 
-void print_envp(t_env *envp)
+void print_envp(t_env *envp, int fd)
 {
 	t_env *tmp = envp;
-	printf(RED "__________PRINT ENVP_________\n" RESET);
 	while (tmp)
 	{
 		if (tmp->value)
-			printf("%s=%s\n", tmp->key, tmp->value);
+		{
+			ft_putstr_fd(tmp->key, fd);
+			write(fd, "=", 1);
+			ft_putendl_fd(tmp->value, fd);
+		}
 		tmp = tmp->next;
 	}
 }
