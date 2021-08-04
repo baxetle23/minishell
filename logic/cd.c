@@ -1,6 +1,7 @@
 #include "../includes/minishell.h"
 
 //обработать поведение эрно
+//lik
 
 int	count_arg_cd(t_cmd *cmd)
 {

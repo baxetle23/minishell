@@ -165,6 +165,7 @@ int		find_infile_des(t_cmd *cmd);
 //pipe
 t_cmd	*pipe_exist(t_cmd *cmd);
 t_cmd	*next_pipe_exist(t_cmd *cmd);
+int		logic_pipe(t_cmd *cmd, t_env *env, char **origin_env);
 
 
 //--------------------------------------------------------

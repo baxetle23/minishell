@@ -67,49 +67,7 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 
 	if (pipe_exist(cmd))
 	{
-		printf("PIPIPIPIPIPIPIP\n");
-		int		p[2];
-		pid_t	pid;
-		int		fd_in = 0;
-		int		i = 0;
-		t_cmd *tmp_cmd;
-		int	flag = 1;
-
-		tmp_cmd = cmd;
-		while(tmp_cmd)
-		{
-			pipe(p);
-			pid = fork();
-			if (pid < 0)
-				exit (0);
-			else if (pid == 0)
-			{
-				printf("test\n");
-				dup2(fd_in, 0); //?
-				if (next_pipe_exist(tmp_cmd))
-				{
-					printf("next exist\n");
-					dup2(p[1], 0);
-				}
-				close(p[0]);
-				find_comand(tmp_cmd, env, origin_env);
-				tmp_cmd = pipe_exist(tmp_cmd)->next;
-			}
-			else
-			{
-				wait(NULL);
-				close(p[1]);
-				fd_in = p[0];
-				// if (flag) {
-					tmp_cmd = pipe_exist(tmp_cmd);
-					flag = 0;
-				// }
-				// tmp_cmd = pipe_exist(tmp_cmd)->next;
-			}
-		}
-	
-
-		//find_comand(cmd, env, origin_env);
+		logic_pipe(cmd, env, origin_env);	
 	}
 	else
 	{
@@ -121,3 +79,4 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 
 // перекинуть arg команд nobildin в флаги
 // << realization
+// все принтефы с ошибками заменить на путстр в stderror!

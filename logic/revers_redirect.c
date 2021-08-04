@@ -4,7 +4,6 @@ t_cmd *find_revers_redirect(t_cmd *cmd)
 {
 	while (cmd->next)
 	{
-		printf("test10\n");
 		if (!ft_strncmp_notregistr(">", cmd->next->cmd, ft_strlen(cmd->next->cmd)) ||
 			!ft_strncmp_notregistr(">>", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
 		{
@@ -66,7 +65,7 @@ int	find_infile_des(t_cmd *cmd)
 		}
 		return get_fd_rredirecta(redirect);
 	}
-	return 1;
+	return 0;
 }
 
 int	comand_revers_redirect(t_cmd *cmd)
