@@ -1,5 +1,35 @@
 #include "../includes/minishell.h"
 
+char	**get_flags(t_cmd *cmd)
+{
+	int	i;
+	int	j;
+	char **flags;
+
+	i = 0;
+	j = 0;
+	while (cmd->flags[i])
+		i++;
+	while (cmd->args[j++])
+		i++;
+	flags = (char **)malloc(sizeof(char *) * (i + 1));
+	flags[i] = NULL;
+	i = 0;
+	j = 0;
+	while(cmd->flags[i])
+	{
+		flags[i] = ft_strdup(cmd->flags[i]);
+		i++;
+	}
+	while(cmd->args[j])
+	{
+		flags[i] = ft_strdup(cmd->args[j]);
+		i++;
+		j++;
+	}
+	return (flags);
+}
+
 void	free_memory(char **split1, char **split2)
 {
 	int	i;
@@ -55,13 +85,15 @@ void call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 {
 	int fd;
 	char *name_programm;
+	char **flags;
 
 	fd = find_file_des(cmd);
 	if (fd < 0)
 		exit (1);
 	dup2(fd, STDOUT_FILENO);
 	name_programm = get_addres(o_env, envp, cmd->cmd);
-	execve(name_programm, cmd->flags, o_env);
+	flags = get_flags(cmd);
+	execve(name_programm, flags, o_env);
 	exit (1);
 }
 
@@ -75,7 +107,6 @@ int	comand_exve(t_cmd *cmd, t_env* envp, char **o_env)
 	{
 		call_execve_process(cmd, envp, o_env);
 	}
-	
 	wait(NULL);
 	return (0);
 }
