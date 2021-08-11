@@ -77,6 +77,5 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 }
 
 
-// перекинуть arg команд nobildin в флаги
 // << realization
 // все принтефы с ошибками заменить на путстр в stderror!
