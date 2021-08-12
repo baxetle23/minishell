@@ -17,10 +17,9 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 			return (-1);
 		dup2(fd_in, STDIN_FILENO);
 	}
-
 //------------------------------
 	if (!ft_strncmp_notregistr("echo", cmd->cmd, ft_strlen(cmd->cmd)))
-		//add flags in output if they not valid
+		//+++
 		comand_echo(cmd);
 	else if (!ft_strncmp_notregistr("cd", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++ add tilda ~
@@ -50,13 +49,10 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 		comand_redirect(cmd);
 	else comand_exve(cmd, envp, o_env);
 //-------------------------------------------
-
-
 	if (fd_in) {
 		close(fd_in);
 		dup2(save_stdin, 0);
 	}
-
 	return (0);
 }
 
@@ -67,7 +63,7 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 
 	if (pipe_exist(cmd))
 	{
-		logic_pipe(cmd, env, origin_env);	
+		logic_pipe(cmd, env, origin_env, count_pipe(cmd) + 2);	
 	}
 	else
 	{
@@ -76,6 +72,5 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 	return (0);
 }
 
-
 // << realization
-// все принтефы с ошибками заменить на путстр в stderror!
+//exit comands

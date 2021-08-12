@@ -21,7 +21,7 @@ int	count_arg_cd(t_cmd *cmd)
 int	comand_cd(t_cmd *cmd, t_env *envp)
 {
 	t_env *tmp;
-	char oldpath[10000];
+	char oldpath[10000]; // ????
 	
 	if (count_arg_cd(cmd) && count_arg_cd(cmd) != 1)
 	{
@@ -60,6 +60,11 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 			
 			//write(1, "test\n", 5);
 			t_env *tmp_home = ft_find_list_env("HOME", &envp);
+			if (tmp_home == NULL)
+			{
+				ft_putendl_fd("cd: HOME not set", 2);
+				return (1);
+			}
 			getcwd(oldpath, 10000);
 			tmp = ft_find_list_env("OLDPWD", &envp);
 			tmp->value = ft_strdup(oldpath);

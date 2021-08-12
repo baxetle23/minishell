@@ -11,49 +11,11 @@ t_cmd *pipe_exist(t_cmd *cmd)
 	return (NULL);
 }
 
-t_cmd *next_pipe_exist(t_cmd *cmd)
+int		count_pipe(t_cmd *cmd)
 {
-	t_cmd* tmp;
-	tmp = pipe_exist(cmd);
-	if (tmp)
-		return (pipe_exist(tmp->next));
-	return (NULL);
-}
-
-int first_step(int *fd, t_cmd *cmd, t_env *env, char **origin_env)
-{
-	printf("first step\nname comand - %s\n", cmd->cmd);
-	dup2(fd[1], 1);
-	close(fd[1]);
-	close(fd[0]);
-	find_comand(cmd, env, origin_env);
-	exit(0);
-}
-
-int	middle_step(int *fd, t_cmd *cmd, t_env *env, char **origin_env)
-{
-	dup2(fd[1], 1);
-	dup2(fd[0], 0);
-	close(fd[1]);
-	close(fd[0]);
-	find_comand(cmd, env, origin_env);
-	exit(0);
-}
-
-int last_step(int *fd, t_cmd *cmd, t_env *env, char **origin_env)
-{
-	printf("last step\nname comand - %s\n", cmd->cmd);
-	dup2(fd[0], 0);
-	close(fd[1]);
-	close(fd[0]);
-	find_comand(cmd, env, origin_env);
-	exit(0);
-}
-
-int count_pipe(t_cmd *cmd)
-{
-	int i = 0;
-	while (cmd)
+	int	i;
+	i = 0;
+	while(cmd)
 	{
 		if (!ft_strcmp(cmd->cmd, "|"))
 			i++;
@@ -62,35 +24,95 @@ int count_pipe(t_cmd *cmd)
 	return (i);
 }
 
-int logic_pipe(t_cmd *cmd, t_env *env, char **origin_env)
+int fd[2][2];
+
+void	term(pid_t *pids, int n)
 {
-	t_cmd	*tmp_cmd;
-	tmp_cmd = cmd;
-	int fd[2];
-	int	pid;
-	pipe(fd);	
-	pid = fork();
-	if (pid == 0)
-		first_step(fd, cmd, env, origin_env);
-	wait(NULL);
+    close(fd[0][0]);
+    close(fd[0][1]);
+    close(fd[1][0]);
+    close(fd[1][1]);
+    for (int i = 1; i <= n; i++) {
+        kill(pids[i], SIGKILL);
+    }
+    exit(1);
+}
 
-	int i = 1;
-	while (i < count_pipe(cmd))
+void	term1(pid_t *pids, int n)
+{
+    close(fd[0][0]);
+    close(fd[0][1]);
+    close(fd[1][0]);
+    close(fd[1][1]);
+    for (int i = 1; i <= n; i++) {
+        kill(pids[i], SIGKILL);
+    }
+}
+
+t_cmd	*get_cmd(t_cmd *cmd, int pos)
+{
+	int i;
+
+	i = 1;
+	while (i != pos)
 	{
-		tmp_cmd = pipe_exist(tmp_cmd)->next;
-		printf("middle step\nname comand - %s\n", tmp_cmd->cmd);
-		pid = fork();
-		if (pid == 0)
-			middle_step(fd, tmp_cmd, env, origin_env);
-		wait(NULL);
-		i++;
+		if(!ft_strcmp(cmd->cmd, "|"))
+			i++;
+		cmd = cmd->next;
 	}
+	return (cmd);
+}
 
-	tmp_cmd = pipe_exist(tmp_cmd)->next;
-	pid = fork();
-	if (pid == 0)
-		last_step(fd, tmp_cmd, env, origin_env);
-	close(fd[1]);
-	close(fd[0]);
-	wait(NULL);
+int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
+{
+	pid_t pids[argc];
+	int status;
+	int fd_in = 0;
+	int save_stdin = dup(STDIN_FILENO);
+	
+	if (pipe(fd[0]) == -1) {
+		exit(1);
+	}
+	if (pipe(fd[1]) == -1) {
+		exit(1);
+	}
+	for (int i = 1; i < argc; i++) {
+		pids[i] = fork();
+		if (pids[i] == -1) {
+			term(pids, i - 1);
+		}
+		if (!pids[i]) {
+			close(fd[i & 1][1]);
+			close(fd[1 - (i & 1)][0]);
+			if (i > 1 && dup2(fd[i & 1][0], 0) == -1) {
+				exit(1);
+			}
+			close(fd[i & 1][0]);
+			if (i != argc - 1) {
+				if (dup2(fd[1 - (i & 1)][1], 1) == -1)
+					exit(1);
+			}
+			close(fd[1 - (i & 1)][1]);
+			cmd = get_cmd(cmd, i);
+			find_comand(cmd, env, origin_env);
+			exit(1);
+		}
+		close(fd[i & 1][0]);
+		close(fd[i & 1][1]);
+		wait(&status);
+        // if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+        //     term1(pids, i);
+        // }
+		if (i == argc - 1) {
+			close(fd[0][0]);
+			close(fd[0][1]);
+			close(fd[1][0]);
+			close(fd[1][1]);
+		}
+		if (pipe(fd[i & 1]) == -1) {
+			term1(pids, i);
+		}	
+	}
+	dup2(save_stdin, 0);
+	return 0;
 }
