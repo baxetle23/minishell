@@ -30,6 +30,18 @@ char	**get_flags(t_cmd *cmd)
 	return (flags);
 }
 
+int	absolute_path(char *name_programm)
+{
+	int i = 0;
+	while(name_programm[i])
+	{
+		if (name_programm[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	free_memory(char **split1, char **split2)
 {
 	int	i;
@@ -91,7 +103,10 @@ void call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 	if (fd < 0)
 		exit (1);
 	dup2(fd, STDOUT_FILENO);
-	name_programm = get_addres(o_env, envp, cmd->cmd);
+	if (absolute_path(cmd->cmd))
+		name_programm = ft_strdup(cmd->cmd);
+	else
+		name_programm = get_addres(o_env, envp, cmd->cmd);
 	flags = get_flags(cmd);
 	execve(name_programm, flags, o_env);
 	exit (1);

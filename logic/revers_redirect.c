@@ -27,7 +27,8 @@ int get_fd_rredirecta(t_cmd *redirect)
 	fd = open(redirect->args[0], O_RDONLY);
 	if (fd < 0)
 	{
-		printf("%s: can't read file\n", redirect->args[0]);
+		ft_putstr_fd(redirect->args[0], 2);
+		ft_putendl_fd(": Permission denied", 2);
 		return (-1);
 	}
 	return fd;
@@ -45,19 +46,18 @@ int	find_infile_des(t_cmd *cmd)
 		{
 			if (!ft_strncmp(redirect->cmd, "<", 2))
 			{
-				printf("test2\n");
 				fd = open(redirect->args[0], O_RDONLY);
 				if ( fd < 0) 
 				{
 					close(fd);
-					printf("%s: can't read file\n", redirect->args[0]);
+					ft_putstr_fd(redirect->args[0], 2);
+					ft_putendl_fd(": can't read file", 2);
 					return (-1);
 				}
 				close(fd);
 			}
 			else
 			{
-				printf("test3\n");
 				//dredirect realizovat'
 			}
 			redirect = find_revers_redirect(redirect);
@@ -74,13 +74,14 @@ int	comand_revers_redirect(t_cmd *cmd)
 
 	if (cmd->args[0] == NULL)
 	{
-		printf(" syntax error near unexpected token `newline'\n");
+		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
 		return (1);
 	}
 	fd = open(cmd->args[0], O_RDONLY);
 	if (fd < 0)
 	{
-		printf("%s: can't read file\n", cmd->args[0]);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putendl_fd(": can't read file", 2);
 		close(fd);
 		return (-1);
 	}
@@ -95,7 +96,7 @@ int	comand_revers_dredirect(t_cmd *cmd) {
 
 	if (cmd->args[0] == NULL)
 	{
-		printf(" syntax error near unexpected token `newline'\n");
+		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
 		return (1);
 	}
 }

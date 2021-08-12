@@ -114,7 +114,8 @@ void add_variable(char *variable, t_env* env)
 
 	new = (t_env *)malloc(sizeof(t_env));
 	if (check_variable(variable)) {
-		printf("export: '%s': not a valid identifier\n", variable);
+		ft_putstr_fd(variable, 2);
+		ft_putendl_fd(": not a valid identifier", 2);
 		return ;
 	}
 	get_key_value(&key, &value, variable);

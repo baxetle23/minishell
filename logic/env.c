@@ -39,7 +39,7 @@ int	output_to_fd_for_env(t_env *env, t_cmd *cmd)
 			fd = open(redirect->args[0], O_CREAT | O_WRONLY | O_APPEND, 0664);
 		if (fd < 0)
 		{
-			printf("ERROR OPEN FILE\n");
+			ft_putendl_fd("ERROR OPEN FILE", 2);
 			return (1);
 		}
 		ft_putenv_fd(env, fd, cmd);

@@ -33,7 +33,7 @@ int		output_to_fd(char **buffer, t_cmd *cmd)
 	int		fd;
 	fd = find_file_des(cmd);
 	if (fd < 0) {
-		printf("erorr open file\n");
+		ft_putendl_fd("error open file", 2);
 		return (-1);
 	}
 	ft_putbuffer_fd(buffer, fd, cmd);

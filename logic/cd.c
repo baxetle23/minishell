@@ -23,12 +23,12 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 	t_env *tmp;
 	char oldpath[10000];
 	
-	printf("we here\n");
 	if (count_arg_cd(cmd) && count_arg_cd(cmd) != 1)
 	{
 		//mistake
-		printf("cd many arg\n");
-		printf("cd: %s: No such file or directory\n", cmd->args[0]);
+		ft_putendl_fd("cd many arg", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		char **buffer;
 		buffer = (char **)malloc(sizeof(char *) * 1);
 		buffer[0] = NULL;
@@ -52,7 +52,8 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 			}
 			else
 				//comeback olDPWD!!!!
-				printf("cd: %s: No such file or directory\n", cmd->args[0]);
+				ft_putstr_fd(cmd->args[0], 2);
+				ft_putendl_fd(": No such file or directory", 2);
 		}
 		else
 		{
@@ -72,7 +73,6 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 		//OLDPWD not NULL
 		if (count_arg_cd(cmd) == 1)
 		{
-						
 			//have argument
 			getcwd(oldpath, 10000);
 			tmp = ft_find_list_env("OLDPWD", &envp);
@@ -85,7 +85,8 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 				tmp->value = ft_strdup(oldpath);
 			}
 			else
-				printf("cd: %s: No such file or directory\n", cmd->args[0]);
+				ft_putstr_fd(cmd->args[0], 2);
+				ft_putendl_fd(": No such file or directory", 2);
 		}
 		else
 		{
@@ -100,11 +101,9 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 			tmp->value = ft_strdup(tmp_home->value);
 		}
 	}
-	
 	char **buffer;
 	buffer = (char **)malloc(sizeof(char *) * 1);
 	buffer[0] = NULL;
-	
 	output_to_fd(buffer, cmd);
 	return (0);
 }

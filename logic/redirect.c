@@ -56,7 +56,8 @@ int get_fd_redirecta(t_cmd *redirect)
 		fd = open(redirect->args[0], O_CREAT | O_WRONLY | O_APPEND, 0664);
 	if (fd < 0)
 	{
-		printf("%s: Permission denied\n", redirect->args[0]);
+		ft_putstr_fd(redirect->args[0], 2);
+		ft_putendl_fd(": Permission denied", 2);
 		return (-1);
 	}
 	return fd;
@@ -76,7 +77,8 @@ int	find_file_des(t_cmd *cmd)
 			{
 				if (open(redirect->args[0], O_CREAT | O_TRUNC, 0664) < 0)
 				{
-					printf("%s: Permission denied\n", redirect->args[0]);
+					ft_putstr_fd(redirect->args[0], 2);
+					ft_putendl_fd(": Permission denied", 2);
 					return (-1);
 				}
 			}
@@ -84,7 +86,8 @@ int	find_file_des(t_cmd *cmd)
 			{
 				if (open(redirect->args[0], O_CREAT, 0664) < 0) 
 				{
-					printf("%s: Permission denied\n", redirect->args[0]);
+					ft_putstr_fd(redirect->args[0], 2);
+					ft_putendl_fd(": Permission denied", 2);
 					return (-1);
 				}
 			}
@@ -100,14 +103,15 @@ int	comand_redirect(t_cmd *cmd)
 {
 	if (cmd->args[0] == NULL)
 	{
-		printf(" syntax error near unexpected token `newline'\n");
+		ft_putendl_fd(" syntax error near unexpected token `newline'", 2);
 		return (1);
 	}
 	if (ft_strncmp(cmd->cmd, ">>", 3))
 	{
 		if (open(cmd->args[0], O_CREAT | O_TRUNC, 0664) < 0)
 		{
-			printf("%s: Permission denied\n", cmd->args[0]);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putendl_fd(": Permission denied", 2);
 			return (-1);
 		}
 	}
@@ -115,7 +119,8 @@ int	comand_redirect(t_cmd *cmd)
 	{
 		if (open(cmd->args[0], O_CREAT, 0664) < 0)
 		{
-			printf("%s: Permission denied\n", cmd->args[0]);
+			ft_putstr_fd(cmd->args[0], 2);
+			ft_putendl_fd(": Permission denied", 2);
 			return (-1);
 		}
 	}
