@@ -93,6 +93,21 @@ char	*get_addres(char **envp, t_env *my_envp, char *cmd_string)
 	exit (5);
 }
 
+void change_envp(t_env *envp, char **o_env)
+{
+	int i = 0;
+	t_env *path = ft_find_list_env("PWD", &envp);
+	while (o_env[i])
+	{
+		if (!ft_strncmp(o_env[i], "PWD=", 4))
+			break ;
+		i++;
+	}
+	char *tmp = ft_strjoin(path->key, "=");
+	o_env[i] = ft_strjoin(tmp, path->value);
+	ft_putendl_fd(o_env[i], 1);
+}
+
 void call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 {
 	int fd;
@@ -108,6 +123,7 @@ void call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 	else
 		name_programm = get_addres(o_env, envp, cmd->cmd);
 	flags = get_flags(cmd);
+	//change_envp(envp, o_env);
 	execve(name_programm, flags, o_env);
 	exit (1);
 }

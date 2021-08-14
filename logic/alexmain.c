@@ -19,7 +19,7 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 	}
 //------------------------------
 	if (!ft_strncmp_notregistr("echo", cmd->cmd, ft_strlen(cmd->cmd)))
-		//+++
+		//+++ add many novalid flags checker
 		comand_echo(cmd);
 	else if (!ft_strncmp_notregistr("cd", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++ add tilda ~
@@ -74,3 +74,4 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 
 // << realization
 //exit comands
+//leaks ctrl C
