@@ -29,6 +29,20 @@ void	ft_get_signals(int id)
 	}
 }
 
+int	ft_only_tabs(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (!((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_minishell(char *line, t_env **env, t_cmd **cmd, char **envir)
 {
 	if (line == NULL)
@@ -36,12 +50,15 @@ int	ft_minishell(char *line, t_env **env, t_cmd **cmd, char **envir)
 		printf("\x1b[2Dexit\n");
 		exit(0);
 	}
-	if (line[0] != '\0')
+	if (line[0] != '\0' && !ft_only_tabs(line))
 	{
+		write(1, "a", 1);
 		add_history(line);
 		if (ft_checkline(line, env, cmd, envir))
 			return (0);
 	}
+	else
+		free (line);
 	return (1);
 }
 

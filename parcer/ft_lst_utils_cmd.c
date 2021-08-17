@@ -45,4 +45,3 @@ void	ft_lstadd_cmd(t_cmd **lst, t_cmd *new)
 		buf->next = new;
 	}
 }
-
