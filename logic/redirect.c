@@ -101,11 +101,6 @@ int	find_file_des(t_cmd *cmd)
 
 int	comand_redirect(t_cmd *cmd)
 {
-	if (cmd->args[0] == NULL)
-	{
-		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
-		return (1);
-	}
 	if (ft_strncmp(cmd->cmd, ">>", 3))
 	{
 		if (open(cmd->args[0], O_CREAT | O_TRUNC, 0664) < 0)
