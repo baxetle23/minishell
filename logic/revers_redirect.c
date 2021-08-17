@@ -56,10 +56,6 @@ int	find_infile_des(t_cmd *cmd)
 				}
 				close(fd);
 			}
-			else
-			{
-				//dredirect realizovat'
-			}
 			redirect = find_revers_redirect(redirect);
 			continue ;
 		}
