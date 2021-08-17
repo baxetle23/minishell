@@ -106,7 +106,7 @@ void get_key_value(char **key, char **value, char *variable)
 	}
 }
 
-void add_variable(char *variable, t_env* env) 
+int add_variable(char *variable, t_env* env) 
 {
 	t_env	*new;
 	char	*key;
@@ -116,7 +116,7 @@ void add_variable(char *variable, t_env* env)
 	if (check_variable(variable)) {
 		ft_putstr_fd(variable, 2);
 		ft_putendl_fd(": not a valid identifier", 2);
-		return ;
+		return 1;
 	}
 	get_key_value(&key, &value, variable);
 	if (value && ft_find_list_env(key, &env))
@@ -129,13 +129,13 @@ void add_variable(char *variable, t_env* env)
 	{
 		if (!ft_find_list_env(key, &env))
 		{
-			//переменной нет
 			new->key = key;
 			new->value = value;
 			new->next = NULL;
 			ft_add_env(&env, new);
 		}
 	}
+	return (0);
 }
 
 int	comand_export(t_cmd *cmd, t_env *env)
@@ -144,15 +144,18 @@ int	comand_export(t_cmd *cmd, t_env *env)
 	
 	fd = find_file_des(cmd);
 	if (fd < 0)
-		return (0);
+		return (1);
 	if (!cmd->args[0]) {
-		// распечатать переменные
 		sort_env(env);
 		print_sort_envp(env, fd);
 		return (0);
 	} else {
 		int i = -1;
 		while (cmd->args[++i])
-			add_variable(cmd->args[i], env);
+		{
+			if (add_variable(cmd->args[i], env))
+				return (1);
+		}
 	}
+	return (0);
 }

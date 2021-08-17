@@ -28,7 +28,7 @@ int get_fd_rredirecta(t_cmd *redirect)
 	if (fd < 0)
 	{
 		ft_putstr_fd(redirect->args[0], 2);
-		ft_putendl_fd("Error open file", 2);
+		ft_putendl_fd(" : Error open file", 2);
 		return (-1);
 	}
 	return fd;

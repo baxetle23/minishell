@@ -3,5 +3,6 @@
 int	comand_exit(t_cmd *cmd)
 {
 	(void)cmd;
-	return (0);
+	ft_putendl_fd("exit", 1);
+	exit(status_erorr);
 }

@@ -16,20 +16,7 @@ void print_comand_arg(t_cmd *cmd)
 		
 }
 
-void print_envp(t_env *envp, int fd)
-{
-	t_env *tmp = envp;
-	while (tmp)
-	{
-		if (tmp->value)
-		{
-			ft_putstr_fd(tmp->key, fd);
-			write(fd, "=", 1);
-			ft_putendl_fd(tmp->value, fd);
-		}
-		tmp = tmp->next;
-	}
-}
+
 
 t_env *find_list_envp(const char * key, t_env *envp)
 {

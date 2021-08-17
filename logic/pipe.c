@@ -66,7 +66,6 @@ t_cmd	*get_cmd(t_cmd *cmd, int pos)
 int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 {
 	pid_t pids[argc];
-	int status;
 	int fd_in = 0;
 	int save_stdin = dup(STDIN_FILENO);
 	
@@ -99,7 +98,8 @@ int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 		}
 		close(fd[i & 1][0]);
 		close(fd[i & 1][1]);
-		wait(&status);
+		wait(&status_erorr);
+		status_erorr = WEXITSTATUS(status_erorr);
 		
 		if (i == argc - 1) {
 			close(fd[0][0]);

@@ -14,7 +14,10 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 		!ft_strncmp_notregistr(">>", cmd->next->cmd, ft_strlen(cmd->next->cmd)))
 			find_file_des(tmp);
 		if (fd_in == -1)
+		{
+			status_erorr = 1;
 			return (-1);
+		}
 		dup2(fd_in, STDIN_FILENO);
 	}
 //------------------------------
