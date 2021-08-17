@@ -81,6 +81,7 @@ typedef struct s_pipex
 	int		i;
 }			t_pipex;
 
+int	status_erorr;
 
 int		ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir);
 

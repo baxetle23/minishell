@@ -100,9 +100,7 @@ int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 		close(fd[i & 1][0]);
 		close(fd[i & 1][1]);
 		wait(&status);
-        // if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
-        //     term1(pids, i);
-        // }
+		
 		if (i == argc - 1) {
 			close(fd[0][0]);
 			close(fd[0][1]);

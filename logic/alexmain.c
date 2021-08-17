@@ -62,16 +62,9 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 	t_env *env = *env_adres;
 
 	if (pipe_exist(cmd))
-	{
-		logic_pipe(cmd, env, origin_env, count_pipe(cmd) + 2);	
-	}
+		logic_pipe(cmd, env, origin_env, count_pipe(cmd) + 2);
 	else
-	{
 		find_comand(cmd, env, origin_env);
-	}
+	printf("%d\n", status_erorr);
 	return (0);
 }
-
-// << realization
-//exit comands
-//leaks ctrl C
