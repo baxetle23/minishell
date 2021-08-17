@@ -194,8 +194,15 @@ int	ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir)
 	ft_print_lst_cmds(cmd);
 	
 
-
-	mainalex(cmd, env, envir);
+	if (ft_comm_check(cmd))
+		mainalex(cmd, env, envir);
+	else
+	{
+		free(line);
+		ft_lstclear_words(&words);
+		ft_lstclear_cmds(cmd);
+		return (0);
+	}
 	free(line);
 	ft_lstclear_words(&words);
 	ft_lstclear_cmds(cmd);
