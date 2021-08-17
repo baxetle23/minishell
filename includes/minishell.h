@@ -84,6 +84,8 @@ typedef struct s_pipex
 
 int	status_erorr;
 
+int		ft_comm_check(t_cmd **cmd);
+
 int		ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir);
 
 char	*ft_strdup_part(const char *s1, int start, int len);
