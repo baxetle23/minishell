@@ -81,6 +81,7 @@ typedef struct s_pipex
 	int		i;
 }			t_pipex;
 
+int	status_erorr;
 
 int		ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir);
 
@@ -146,20 +147,34 @@ int	comand_echo(t_cmd *cmd);
 int	comand_cd(t_cmd *cmd, t_env *envp);
 int	comand_pwd(t_cmd *cmd, t_env *envp);
 int	comand_export(t_cmd *cmd, t_env *envp);
-int	comand_unset(t_cmd *cmd);
+int	comand_unset(t_cmd *cmd, t_env *envp);
 int	comand_env(t_cmd *cmd, t_env *envp);
 int	comand_exit(t_cmd *cmd);
 int	comand_redirect(t_cmd *cmd);
+int	comand_revers_redirect(t_cmd *cmd);
+int	comand_revers_dredirect(t_cmd *cmd);
 int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
 
-
+//redirect
 int		output_to_fd(char **buffer, t_cmd *cmd);
 t_cmd	*find_redirect(t_cmd *cmd);
 t_cmd	*many_redirect(t_cmd *cmd);
 int		find_file_des(t_cmd *cmd);
+//revers redirect
+t_cmd	*find_revers_redirect(t_cmd *cmd);
+int		find_infile_des(t_cmd *cmd);
+//pipe
+t_cmd	*pipe_exist(t_cmd *cmd);
+int		count_pipe(t_cmd *cmd);
+int		logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc);
+
 
 //--------------------------------------------------------
 
-void	print_envp(t_env *envp);
+void	print_envp(t_env *envp, int fd);
 void	print_comand_arg(t_cmd *cmd);
+void	print_sort_envp(t_env *envp, int fd);
+
+
+void	ft_delete_list_env(char *key, t_env **env);
 #endif

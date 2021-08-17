@@ -1,5 +1,17 @@
 #include "../includes/minishell.h"
 
+int free_buffer(char **buffer)
+{
+	int i = 0;
+	while (buffer[i])
+	{
+		free(buffer[i]);
+		i++;
+	}
+	free(buffer);
+	return (1);
+}
+
 int	ft_putbuffer_fd(char **buffer, int fd, t_cmd *cmd)
 {
 	int i;
@@ -12,6 +24,7 @@ int	ft_putbuffer_fd(char **buffer, int fd, t_cmd *cmd)
 				write(fd, " ", 1);
 		i++;
 	}
+	free_buffer(buffer);
 	return (0);
 }
 
@@ -19,6 +32,10 @@ int		output_to_fd(char **buffer, t_cmd *cmd)
 {
 	int		fd;
 	fd = find_file_des(cmd);
+	if (fd < 0) {
+		ft_putendl_fd("error open file", 2);
+		return (-1);
+	}
 	ft_putbuffer_fd(buffer, fd, cmd);
 	return (0);
 }

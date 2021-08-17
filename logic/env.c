@@ -39,7 +39,7 @@ int	output_to_fd_for_env(t_env *env, t_cmd *cmd)
 			fd = open(redirect->args[0], O_CREAT | O_WRONLY | O_APPEND, 0664);
 		if (fd < 0)
 		{
-			printf("ERROR OPEN FILE\n");
+			ft_putendl_fd("ERROR OPEN FILE", 2);
 			return (1);
 		}
 		ft_putenv_fd(env, fd, cmd);
@@ -52,6 +52,10 @@ int	output_to_fd_for_env(t_env *env, t_cmd *cmd)
 
 int	comand_env(t_cmd *cmd, t_env *env)
 {
-	print_sort_envp(env, cmd);
+	int		fd;
+	fd = find_file_des(cmd);
+	if (fd < 0)
+		return (0);
+	print_envp(env, fd);
 	return (0);
 }
