@@ -10,6 +10,7 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <sys/errno.h>
+# include <sys/wait.h>
 
 # define B_DARKGREY "\e[1;30m"
 # define B_RED "\e[1;31m"

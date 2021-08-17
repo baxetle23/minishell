@@ -133,7 +133,7 @@ void call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 	flags = get_flags(cmd);
 	//change_envp(envp, o_env);
 	execve(name_programm, flags, o_env);
-	status_erorr = 127;
+	status_erorr = WEXITSTATUS(&status);
 	exit (1);
 }
 
