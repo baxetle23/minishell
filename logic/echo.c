@@ -1,8 +1,8 @@
 #include "../includes/minishell.h"
 
-int ft_strcmp_echo(char * flag)
+int	ft_strcmp_echo(char * flag)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (flag == NULL) {
@@ -81,6 +81,5 @@ int	comand_echo(t_cmd *cmd)
 		buffer[i - 1 + flag] = ft_strjoin(tmp, "\n");
 		free(tmp);
 	}
-	output_to_fd(buffer, cmd);
-	return (0);
+	return (output_to_fd(buffer, cmd));
 }

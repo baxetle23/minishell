@@ -17,19 +17,13 @@ int	count_arg_cd(t_cmd *cmd)
 
 int	comand_cd(t_cmd *cmd, t_env *envp)
 {
-	t_env *tmp;
-	char oldpath[10000]; // ????
-	
-	if (count_arg_cd(cmd) && count_arg_cd(cmd) != 1)
+	t_env	*tmp;
+	char	oldpath[10000];
+
+	if (count_arg_cd(cmd) == 0 || count_arg_cd(cmd) != 1)
 	{
 		//mistake
-		ft_putendl_fd("cd many arg", 2);
-		ft_putstr_fd(cmd->args[0], 2);
-		ft_putendl_fd(": No such file or directory", 2);
-		char **buffer;
-		buffer = (char **)malloc(sizeof(char *) * 1);
-		buffer[0] = NULL;
-		output_to_fd(buffer, cmd);
+		ft_putendl_fd("cd with only a relative or absolute path", 2);
 		return (1);
 	}
 	if (!((ft_find_list_env("OLDPWD", &envp))->value))
@@ -67,14 +61,12 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 			{
 				//comeback olDPWD!!!!
 				ft_putstr_fd(cmd->args[0], 2);
-				ft_putendl_fd("test", 2);
 				ft_putendl_fd(": No such file or directory", 2);
+				return (1);
 			}
 		}
 		else
 		{
-			
-			//write(1, "test\n", 5);
 			t_env *tmp_home = ft_find_list_env("HOME", &envp);
 			if (tmp_home == NULL)
 			{
@@ -127,6 +119,7 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 			{
 				ft_putstr_fd(cmd->args[0], 2);
 				ft_putendl_fd(": No such file or directory", 2);
+				return (1);
 			}
 		}
 		else
@@ -147,9 +140,5 @@ int	comand_cd(t_cmd *cmd, t_env *envp)
 			tmp->value = ft_strdup(tmp_home->value);
 		}
 	}
-	char **buffer;
-	buffer = (char **)malloc(sizeof(char *) * 1);
-	buffer[0] = NULL;
-	output_to_fd(buffer, cmd);
 	return (0);
 }

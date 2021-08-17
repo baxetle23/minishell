@@ -70,8 +70,7 @@ char	*get_addres(char **envp, t_env *my_envp, char *cmd_string)
 		if (a.i == 1000) {
 			ft_putstr_fd(a.comand[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
-			status_erorr = 127;
-			exit (5);
+			exit (127);
 		}
 	}
 	a.strings_way = ft_split(envp[a.i] + 5, ':');
@@ -93,8 +92,7 @@ char	*get_addres(char **envp, t_env *my_envp, char *cmd_string)
 	ft_putstr_fd(a.comand[0], 2);
 	ft_putstr_fd(": command not found\n", 2);
 	free_memory(a.strings_way, a.comand);
-	status_erorr = 127;
-	exit (5);
+	exit (127);
 }
 
 void change_envp(t_env *envp, char **o_env)
@@ -145,5 +143,6 @@ int	comand_exve(t_cmd *cmd, t_env* envp, char **o_env)
 	if (pid == 0)
 		call_execve_process(cmd, envp, o_env);
 	wait(&status_erorr);
+	status_erorr = WEXITSTATUS(status_erorr);
 	return (0);
 }

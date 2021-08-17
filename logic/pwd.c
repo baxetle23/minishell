@@ -1,8 +1,7 @@
 #include "../includes/minishell.h"
 
-int	comand_pwd(t_cmd *cmd, t_env *env)
+int	comand_pwd(t_cmd *cmd, t_env *env, char **env_o)
 {
-	// если не находим PATH вызывает execve! 
 	int i;
 	t_env	*tmp;
 	char	**buffer;
@@ -10,10 +9,7 @@ int	comand_pwd(t_cmd *cmd, t_env *env)
 
 	tmp = ft_find_list_env("PWD", &env);
 	if (tmp == NULL)
-	{
-		ft_putendl_fd("I don't know where we are", 2);
-		return (1);
-	}
+		return (comand_exve(cmd, env, env_o));
 	i = 0;
 	buffer = (char **)malloc(sizeof(char *) * 2);
 	buffer[1] = NULL;
@@ -21,6 +17,5 @@ int	comand_pwd(t_cmd *cmd, t_env *env)
 	temp = buffer[0];
 	buffer[0] = ft_strjoin(temp, "\n");
 	free(temp);
-	output_to_fd(buffer, cmd);
-	return (0);
+	return (output_to_fd(buffer, cmd));
 }

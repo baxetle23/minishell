@@ -103,7 +103,7 @@ int	comand_redirect(t_cmd *cmd)
 {
 	if (cmd->args[0] == NULL)
 	{
-		ft_putendl_fd(" syntax error near unexpected token `newline'", 2);
+		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
 		return (1);
 	}
 	if (ft_strncmp(cmd->cmd, ">>", 3))
@@ -112,7 +112,7 @@ int	comand_redirect(t_cmd *cmd)
 		{
 			ft_putstr_fd(cmd->args[0], 2);
 			ft_putendl_fd(": Permission denied", 2);
-			return (-1);
+			return (1);
 		}
 	}
 	else
@@ -121,9 +121,8 @@ int	comand_redirect(t_cmd *cmd)
 		{
 			ft_putstr_fd(cmd->args[0], 2);
 			ft_putendl_fd(": Permission denied", 2);
-			return (-1);
+			return (1);
 		}
 	}
-	find_file_des(cmd);
-	return (0);
+	return (find_file_des(cmd));
 }

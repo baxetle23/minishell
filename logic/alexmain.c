@@ -20,34 +20,33 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 //------------------------------
 	if (!ft_strncmp_notregistr("echo", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++ add many novalid flags checker
-		comand_echo(cmd);
+		status_erorr = comand_echo(cmd);
 	else if (!ft_strncmp_notregistr("cd", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++ add tilda ~
-		comand_cd(cmd, envp);
+		status_erorr = comand_cd(cmd, envp);
 	else if (!ft_strncmp_notregistr("pwd", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++
-		comand_pwd(cmd, envp);
+		status_erorr = comand_pwd(cmd, envp, o_env);
 	else if (!ft_strncmp_notregistr("export", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++
-		comand_export(cmd, envp);
+		status_erorr = comand_export(cmd, envp);
 	else if (!ft_strncmp_notregistr("unset", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++
-		comand_unset(cmd, envp);
+		status_erorr = comand_unset(cmd, envp);
 	else if (!ft_strncmp_notregistr("env", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++
-		comand_env(cmd, envp);
+		status_erorr = comand_env(cmd, envp);
 	else if (!ft_strncmp_notregistr("exit", cmd->cmd, ft_strlen(cmd->cmd)))
-		comand_exit(cmd);
+		status_erorr = comand_exit(cmd);
 	else if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++
-		comand_revers_redirect(cmd);
-	else if (!ft_strncmp_notregistr("<<", cmd->cmd, ft_strlen(cmd->cmd)))
-		comand_revers_dredirect(cmd);
+		status_erorr = comand_revers_redirect(cmd);
 	else if (!ft_strncmp_notregistr(">", cmd->cmd, ft_strlen(cmd->cmd)) ||
 		!ft_strncmp_notregistr(">>", cmd->cmd, ft_strlen(cmd->cmd)))
 		//+++
-		comand_redirect(cmd);
-	else comand_exve(cmd, envp, o_env);
+		status_erorr = comand_redirect(cmd);
+	else
+		comand_exve(cmd, envp, o_env);
 //-------------------------------------------
 	if (fd_in) {
 		close(fd_in);

@@ -146,7 +146,7 @@ int	ft_strncmp_notregistr(const char *s1, const char *s2, size_t n);
 
 int	comand_echo(t_cmd *cmd);
 int	comand_cd(t_cmd *cmd, t_env *envp);
-int	comand_pwd(t_cmd *cmd, t_env *envp);
+int	comand_pwd(t_cmd *cmd, t_env *envp, char **o_env);
 int	comand_export(t_cmd *cmd, t_env *envp);
 int	comand_unset(t_cmd *cmd, t_env *envp);
 int	comand_env(t_cmd *cmd, t_env *envp);
