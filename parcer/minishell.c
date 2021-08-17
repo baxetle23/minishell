@@ -37,7 +37,6 @@ int	ft_only_tabs(char *line)
 	while (line[i] != '\0')
 	{
 		if (!((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
-		//if (!(line[i] == ' '))
 			return (0);
 		i++;
 	}
