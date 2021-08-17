@@ -28,7 +28,7 @@ int get_fd_rredirecta(t_cmd *redirect)
 	if (fd < 0)
 	{
 		ft_putstr_fd(redirect->args[0], 2);
-		ft_putendl_fd(": Permission denied", 2);
+		ft_putendl_fd("Error open file", 2);
 		return (-1);
 	}
 	return fd;
@@ -72,11 +72,6 @@ int	comand_revers_redirect(t_cmd *cmd)
 {
 	int	fd;
 
-	if (cmd->args[0] == NULL)
-	{
-		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
-		return (1);
-	}
 	fd = open(cmd->args[0], O_RDONLY);
 	if (fd < 0)
 	{
@@ -89,14 +84,4 @@ int	comand_revers_redirect(t_cmd *cmd)
 	if (fd > 2)
 		close(fd);
 	return (0);
-}
-
-int	comand_revers_dredirect(t_cmd *cmd) {
-	int	fd;
-
-	if (cmd->args[0] == NULL)
-	{
-		ft_putendl_fd("syntax error near unexpected token `newline'", 2);
-		return (1);
-	}
 }
