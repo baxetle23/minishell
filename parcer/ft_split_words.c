@@ -196,7 +196,7 @@ int	ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir)
 	if (ft_comm_check(cmd))
 	{
 		write(1, "\n\n---------\n", 12);
-		mainalex(cmd, env, envir);
+	//	mainalex(cmd, env, envir);
 	}
 
 	ft_print_lst_cmds(cmd);

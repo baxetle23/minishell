@@ -30,7 +30,6 @@ int	ft_get_list_environments(char **e, t_env **env)
 		}
 		ft_add_env(env, new);
 	}
-
 	new = ft_find_list_env("OLDPWD", env);
 	if (new)
 	{

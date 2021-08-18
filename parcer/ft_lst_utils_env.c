@@ -41,7 +41,6 @@ void	ft_add_env(t_env **lst, t_env *new)
 	}
 }
 
-
 char	*ft_env_search(char *find, t_env **env)
 {
 	t_env	*buf;

@@ -84,6 +84,9 @@ typedef struct s_pipex
 
 int		g_status_error;
 
+void	ft_add_all_redirects(t_words **words, int start, t_cmd **start_cmd);
+int		ft_count_red(t_words **words, int start);
+
 int		ft_comm_check(t_cmd **cmd);
 
 int		ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir);
