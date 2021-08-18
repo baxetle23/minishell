@@ -1,4 +1,3 @@
-
 #include "libft.h"
 
 void	fun(char *a, const char *b, size_t *i);

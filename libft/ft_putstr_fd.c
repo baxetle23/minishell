@@ -1,5 +1,3 @@
-
-
 #include "libft.h"
 
 int	ft_putstr_fd(const char *s, int fd)
@@ -11,4 +9,3 @@ int	ft_putstr_fd(const char *s, int fd)
 	}
 	return (-1);
 }
-
