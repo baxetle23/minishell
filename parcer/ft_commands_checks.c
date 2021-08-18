@@ -87,7 +87,7 @@ void	ft_echo_fill(t_cmd *cmd)
 	i = 0;
 	while (cmd->args[i])
 	{
-		write(1, "!", 1);
+		//write(1, "!", 1);
 		res_args[0] = ft_strjoin_m(res_args[0], ft_strdup(cmd->args[i]));
 		if (cmd->args[i + 1])
 			res_args[0] = ft_strjoin_m(res_args[0], ft_strdup(" "));

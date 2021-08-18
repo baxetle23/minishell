@@ -1,8 +1,10 @@
 #include "../includes/minishell.h"
 
-void print_envp(t_env *envp, int fd)
+void	print_envp(t_env *envp, int fd)
 {
-	t_env *tmp = envp;
+	t_env	*tmp;
+
+	tmp = envp;
 	while (tmp)
 	{
 		if (tmp->value)
@@ -17,7 +19,8 @@ void print_envp(t_env *envp, int fd)
 
 int	comand_env(t_cmd *cmd, t_env *env)
 {
-	int		fd;
+	int	fd;
+
 	fd = find_file_des(cmd);
 	if (fd < 0)
 		return (1);
