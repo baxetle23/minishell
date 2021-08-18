@@ -5,7 +5,7 @@ void	ft_free_mas(char **t)
 	int	i;
 
 	if (!t)
-		return;
+		return ;
 	i = 0;
 	while (t[i] != NULL)
 		free(t[i++]);
@@ -25,4 +25,20 @@ void	ft_terminate(char *s)
 {
 	ft_putstr_fd(s, 2);
 	exit (1);
+}
+
+void	ft_remove_files(t_cmd **cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = *cmd;
+	while (tmp)
+	{
+		if (tmp->cmd[0] == '<')
+		{
+			printf("\nfile: %s\n", tmp->args[0]);
+			remove(tmp->args[0]);
+		}
+		tmp = tmp->next;
+	}
 }

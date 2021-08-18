@@ -17,7 +17,7 @@ int	ft_lst_cmd_length(t_cmd **cmd)
 	return (i);
 }
 
-t_cmd	*ft_lstnew_cmd(char *cmd, char **flags, char **args)
+t_cmd	*ft_lstnew_cmd(char *cmd, char **flags, char **args, int active)
 {
 	t_cmd	*new;
 
@@ -25,6 +25,7 @@ t_cmd	*ft_lstnew_cmd(char *cmd, char **flags, char **args)
 	if (!new)
 		return (0);
 	new->cmd = cmd;
+	new->active = active;
 	new->flags = flags;
 	new->args = args;
 	new->next = NULL;

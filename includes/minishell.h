@@ -68,6 +68,7 @@ typedef struct	s_env
 typedef struct s_cmd
 {
 	char			*cmd;
+	int             active;
 	char			**flags;
 	char			**args;
 	struct s_cmd	*next;
@@ -105,7 +106,7 @@ int		ft_count_red(t_words **words, int start);
 void	ft_get_commands(t_words **words, char *line, t_cmd **cmd);
 
 int		ft_simbols_in_word(char *word);
-t_cmd	*ft_lstnew_cmd(char *cmd, char **flags, char **args);
+t_cmd	*ft_lstnew_cmd(char *cmd, char **flags, char **args, int active);
 void	ft_lstadd_cmd(t_cmd **lst, t_cmd *new);
 
 void	ft_lstclear_cmds(t_cmd **env);
@@ -128,6 +129,8 @@ void	ft_pipe(int *i, char *line, t_words **words);
 char	**get_empty_m(void);
 void	ft_free_mas(char **t);
 void	ft_terminate(char *s);
+void    ft_remove_files(t_cmd **cmd);
+
 int		ft_get_list_environments(char **e, t_env **env);
 t_env	*ft_find_list_env(char *find, t_env **env);
 

@@ -95,7 +95,7 @@ int	ft_get_count_flags(t_words **words, int	list_start)
 				tmp = tmp->next;
 	}
 	i = 0;
-	if (tmp && !((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active))
+	if (tmp && !(tmp->word[0] == '|' && tmp->active) && !((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active))
 	{
 		tmp = tmp->next;
 		i++;
@@ -181,13 +181,14 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 	{
 		old_start = start;
 		printf("\nstart from: %d\n", start);
-		command = ft_get_cmd_by_start(words, start);
+	//	if (ft_strcmp(ft_get_cmd_by_start(words, start), "|"))
+	    command = ft_get_cmd_by_start(words, start);
 		printf("comand: %s\n", command);
 		
-		if (command[0] == '|')
+		if (command[0] == '|' && ft_check_acitve(words, start))
 		{
 			start = start + 1;
-			cmd = ft_lstnew_cmd(command, get_empty_m(), get_empty_m());
+			cmd = ft_lstnew_cmd(command, get_empty_m(), get_empty_m(), 1);
 			ft_lstadd_cmd(cmd_input, cmd);
 		}
 		else
@@ -202,11 +203,11 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 			{
 				cmd = ft_lstnew_cmd(command,
 					ft_get_flags(words, start, flags_count),
-					ft_get_args(words, start, flags_count, args_count));
-					tmp = cmd->cmd;
-					cmd->cmd = ft_strdup(cmd->flags[0]);
-					free(tmp);
-					ft_lstadd_cmd(cmd_input, cmd);
+					ft_get_args(words, start, flags_count, args_count), 0);
+				tmp = cmd->cmd;
+				cmd->cmd = ft_strdup(cmd->flags[0]);
+				free(tmp);
+				ft_lstadd_cmd(cmd_input, cmd);
 			}
 			else
 				free(command);

@@ -8,7 +8,7 @@ void	ft_print_lst_cmds(t_cmd **cmd)
 	tmp = *cmd;
 	while (tmp)
 	{
-		printf("command: %s\nflags:\n", tmp->cmd);
+		printf("command: %s - active: %i\nflags:\n", tmp->cmd, tmp->active);
 		i = 0;
 		if (tmp->flags)
 		{

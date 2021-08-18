@@ -190,20 +190,16 @@ int	ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir)
 //	cmd = NULL;
 	ft_get_commands(&words, line, cmd);
 
-	
+
 	ft_print_lst_cmds(cmd);
-	
 
 	if (ft_comm_check(cmd))
-		mainalex(cmd, env, envir);
-	else
 	{
-		free(line);
-		ft_lstclear_words(&words);
-		ft_lstclear_cmds(cmd);
-		return (0);
+		write(1, "\n\n---------\n", 12);
+		mainalex(cmd, env, envir);
 	}
 	free(line);
+	ft_remove_files(cmd);
 	ft_lstclear_words(&words);
 	ft_lstclear_cmds(cmd);
 	return (1);
