@@ -35,7 +35,7 @@ int	ft_putbuffer_fd(char **buffer, int fd, t_cmd *cmd)
 	return (0);
 }
 
-int		output_to_fd(char **buffer, t_cmd *cmd)
+int	output_to_fd(char **buffer, t_cmd *cmd)
 {
 	int		fd;
 	fd = find_file_des(cmd);
