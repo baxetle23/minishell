@@ -50,7 +50,7 @@ int	ft_minishell(char *line, t_env **env, t_cmd **cmd, char **envir)
 	}
 	if (line[0] != '\0' && !ft_only_tabs(line))
 	{
-		write(1, "a", 1);
+		//write(1, "a", 1);
 		add_history(line);
 		if (ft_checkline(line, env, cmd, envir))
 			return (0);

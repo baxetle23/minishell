@@ -74,7 +74,7 @@ char	**ft_get_args(t_words **words, int start, int flags_count, int args_count)
 			tmp = tmp->next;
 		}
 	}
-	write(1, "yep!", 4);
+	//write(1, "yep!", 4);
 	res[i] = NULL;
 	return (res);
 }
@@ -102,7 +102,7 @@ int	ft_get_count_flags(t_words **words, int	list_start)
 	}
 	while (tmp && !(tmp->word[0] == '|' && tmp->active) && (((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active) || tmp->word[0] == '-'))
 	{
-		printf("proba i %d\n", i);
+		//printf("proba i %d\n", i);
 		if ((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active)
 		{
 			tmp = tmp->next;
@@ -180,10 +180,10 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 	while (start < ft_lst_words_length(words))
 	{
 		old_start = start;
-		printf("\nstart from: %d\n", start);
+		//printf("\nstart from: %d\n", start);
 	//	if (ft_strcmp(ft_get_cmd_by_start(words, start), "|"))
 	    command = ft_get_cmd_by_start(words, start);
-		printf("comand: %s\n", command);
+		//printf("comand: %s\n", command);
 		
 		if (command[0] == '|' && ft_check_acitve(words, start))
 		{
@@ -194,10 +194,10 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 		else
 		{
 			flags_count = ft_get_count_flags(words, start);
-			printf("count of flags(-): %d\n", flags_count);
+			//printf("count of flags(-): %d\n", flags_count);
 		
 			args_count = ft_get_count_args(words, start, flags_count);
-			printf("count of args(-): %d\n", args_count);
+			//printf("count of args(-): %d\n", args_count);
 			
 			if (args_count || flags_count)
 			{
@@ -211,14 +211,14 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 			}
 			else
 				free(command);
-			printf("count of red: %d\n", ft_count_red(words, start));
+			//printf("count of red: %d\n", ft_count_red(words, start));
 			ft_add_all_redirects(words, old_start, cmd_input);
 
 			start = start + flags_count + args_count + ft_count_red(words, old_start);
 		}
-		printf("next start from: %d\n", start);
+		//printf("next start from: %d\n", start);
 	}
-	printf("\nPRINT\n");
+	//printf("\nPRINT\n");
 //	ft_print_lst_cmds(cmd_input);
 //	ft_lstclear_cmds(&start_cmd);
 }

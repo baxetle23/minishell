@@ -154,6 +154,9 @@ int		comand_revers_redirect(t_cmd *cmd);
 int		comand_revers_dredirect(t_cmd *cmd);
 int		comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
 
+void	call_execve_process(t_cmd *cmd, t_env *envp, char **o_env);
+void	free_memory(char **split1, char **split2);
+
 //redirect
 int		output_to_fd(char **buffer, t_cmd *cmd);
 t_cmd	*find_redirect(t_cmd *cmd);
