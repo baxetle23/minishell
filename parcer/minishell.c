@@ -4,7 +4,6 @@ void	ft_get_signals(int id)
 {
 	if (id == SIGINT)
 	{
-		
 	//	rl_on_new_line();
 	//	rl_redisplay();
 	//	write(1, EYESES, 5);
@@ -21,7 +20,6 @@ void	ft_get_signals(int id)
 		
 	//	rl_redisplay();
 	//	printf("\x1b[2D");
-		
 	}
 	if (id == SIGQUIT)
 	{
@@ -71,13 +69,9 @@ int	main(int argc, char **argv, char **envir)
 
 	if (!ft_get_list_environments(envir, &env))
 		ft_terminate("malloc error");
-
 	signal(SIGINT, ft_get_signals);
 	sigignore(SIGQUIT);
 	//signal(SIGQUIT, ft_get_signals);
-
-
-	//errno = 83;
 	while (1)
 	{
 		cmd = NULL;
@@ -89,7 +83,5 @@ int	main(int argc, char **argv, char **envir)
 	}
 	return (0);
 }
-
-
 
 //readline, rl_on_new_line, rl_replace_line, rl_redisplay, add_history

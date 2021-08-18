@@ -14,7 +14,7 @@ char	*ft_dollar(int *i, char *line, t_env **env)
 	else if (line[j] == '?')
 	{
 		*i = j + 1;
-		return(ft_itoa(status_erorr));
+		return(ft_itoa(g_status_erorr));
 	}
 //	j = *i + 1;
 /*	if (line[j] == '?')
