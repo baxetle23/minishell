@@ -198,6 +198,9 @@ int	ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir)
 		write(1, "\n\n---------\n", 12);
 		mainalex(cmd, env, envir);
 	}
+
+	ft_print_lst_cmds(cmd);
+
 	free(line);
 	ft_remove_files(cmd);
 	ft_lstclear_words(&words);

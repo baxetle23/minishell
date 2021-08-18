@@ -13,7 +13,7 @@ void	ft_print_lst_cmds(t_cmd **cmd)
 		if (tmp->flags)
 		{
 			while (tmp->flags[i])
-				printf("%s\n", tmp->flags[i++]);
+				printf("-%s-\n", tmp->flags[i++]);
 		}
 		else
 			printf("flags doesn't exist\n");
@@ -26,7 +26,7 @@ void	ft_print_lst_cmds(t_cmd **cmd)
 		}
 		else
 			printf("args doesn't exist\n");
-		printf("\n");
+		printf("//end//\n");
 		tmp = tmp->next;
 	}
 }
