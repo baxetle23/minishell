@@ -68,7 +68,7 @@ typedef struct	s_env
 typedef struct s_cmd
 {
 	char			*cmd;
-	int             active;
+	int				active;
 	char			**flags;
 	char			**args;
 	struct s_cmd	*next;

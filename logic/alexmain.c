@@ -41,11 +41,11 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 		status_erorr = comand_env(cmd, envp);
 	else if (!ft_strncmp_notregistr("exit", cmd->cmd, ft_strlen(cmd->cmd)))
 		status_erorr = comand_exit(cmd);
-	else if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_notregistr("<", cmd->cmd, ft_strlen(cmd->cmd)) && cmd->active)
 		//+++
 		status_erorr = comand_revers_redirect(cmd);
-	else if (!ft_strncmp_notregistr(">", cmd->cmd, ft_strlen(cmd->cmd)) ||
-		!ft_strncmp_notregistr(">>", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if ((!ft_strncmp_notregistr(">", cmd->cmd, ft_strlen(cmd->cmd)) ||
+		!ft_strncmp_notregistr(">>", cmd->cmd, ft_strlen(cmd->cmd))) && cmd->active)
 		//+++
 		status_erorr = comand_redirect(cmd);
 	else

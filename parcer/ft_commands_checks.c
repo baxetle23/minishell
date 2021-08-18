@@ -15,7 +15,7 @@ int	ft_create_new_file(t_cmd *cur)
 	int		fd;
 	
 	count = 0;
-	fd = open("1time194fir_3", O_CREAT | O_RDWR);
+	fd = open("1time194fir_3", O_CREAT | O_RDWR, 0777);
 	line = readline("> ");
 	while (line && ft_strcmp(cur->args[0], line))
 	{
@@ -29,6 +29,7 @@ int	ft_create_new_file(t_cmd *cur)
 	cur->cmd = ft_strdup("<");
 	free(cur->args[0]);
 	cur->args[0] = ft_strdup("1time194fir_3");
+	close(fd);
 	return (0);
 }
 
