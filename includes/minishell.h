@@ -82,7 +82,7 @@ typedef struct s_pipex
 	int		i;
 }			t_pipex;
 
-int		g_status_erorr;
+int		g_status_error;
 
 int		ft_comm_check(t_cmd **cmd);
 

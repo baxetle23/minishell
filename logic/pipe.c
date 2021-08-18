@@ -75,7 +75,7 @@ int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 	if (pipe(fd[1]) == -1) {
 		exit(1);
 	}
-	printf("begin %d\n", status_erorr);
+	printf("begin %d\n", g_status_error);
 	for (int i = 1; i < argc; i++) {
 		pids[i] = fork();
 		if (pids[i] == -1) {
@@ -98,13 +98,13 @@ int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 		}
 		close(fd[i & 1][0]);
 		close(fd[i & 1][1]);
-		wait(&status_erorr);
-		printf("status %d\n", status_erorr);
-		if (status_erorr > 127)
-			status_erorr = 256 - WEXITSTATUS(status_erorr);
+		wait(&g_status_error);
+		printf("status %d\n", g_status_error);
+		if (g_status_error > 127)
+			g_status_error = 256 - WEXITSTATUS(g_status_error);
 		else 
-			status_erorr = WEXITSTATUS(status_erorr);
-		printf("%d %d\n", i, status_erorr);
+			g_status_error = WEXITSTATUS(g_status_error);
+		printf("%d %d\n", i, g_status_error);
 		
 		if (i == argc - 1) {
 			close(fd[0][0]);
@@ -117,7 +117,7 @@ int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 		}	
 	}
 	
-	//waitpid(pids[argc - 1], &status_erorr, 0);
+	//waitpid(pids[argc - 1], &g_status_error, 0);
 	dup2(save_stdin, 0);
 	return 0;
 }
