@@ -144,5 +144,5 @@ int	comand_exve(t_cmd *cmd, t_env* envp, char **o_env)
 		call_execve_process(cmd, envp, o_env);
 	wait(&status_erorr);
 	status_erorr = WEXITSTATUS(status_erorr);
-	return (0);
+	return (status_erorr);
 }
