@@ -119,5 +119,7 @@ int	comand_redirect(t_cmd *cmd)
 			return (1);
 		}
 	}
-	return (find_file_des(cmd));
+	if (find_file_des(cmd) == 1)
+		return (0);
+	return (1);
 }

@@ -149,6 +149,7 @@ int	mainalex(t_cmd **cmd_adres, t_env **env, char **origin);
 
 int	ft_strncmp_notregistr(const char *s1, const char *s2, size_t n);
 
+int	find_comand(t_cmd *cmd, t_env *envp, char **o_env);
 int	comand_echo(t_cmd *cmd);
 int	comand_cd(t_cmd *cmd, t_env *envp);
 int	comand_pwd(t_cmd *cmd, t_env *envp, char **o_env);
@@ -164,7 +165,6 @@ int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
 //redirect
 int		output_to_fd(char **buffer, t_cmd *cmd);
 t_cmd	*find_redirect(t_cmd *cmd);
-t_cmd	*many_redirect(t_cmd *cmd);
 int		find_file_des(t_cmd *cmd);
 //revers redirect
 t_cmd	*find_revers_redirect(t_cmd *cmd);
