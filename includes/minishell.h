@@ -48,6 +48,8 @@
 # define INFINITY "\xE2\x99\xBE"
 # define KIRPICH "\xE2\x9B\x94"
 
+# define FILENAME ".tmp/1time194fir_"
+
 typedef struct s_words
 {
 	char			*word;

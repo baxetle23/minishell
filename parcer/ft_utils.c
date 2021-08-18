@@ -36,8 +36,11 @@ void	ft_remove_files(t_cmd **cmd)
 	{
 		if (tmp->cmd[0] == '<')
 		{
-			printf("\nfile: %s\n", tmp->args[0]);
-			remove(tmp->args[0]);
+			if (!ft_strncmp(tmp->args[0], FILENAME, ft_strlen(FILENAME)))
+			{
+				printf("\nfile: %s\n", tmp->args[0]);
+				unlink(tmp->args[0]);
+			}
 		}
 		tmp = tmp->next;
 	}

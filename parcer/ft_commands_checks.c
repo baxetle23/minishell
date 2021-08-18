@@ -8,14 +8,17 @@ int	ft_print_syntaxerror(void)
 	return (0);
 }
 
-int	ft_create_new_file(t_cmd *cur)
+int	ft_create_new_file(t_cmd *cur, int i)
 {
-	static int	count;
 	char	*line;
+	char	*name;
+	char	*num;
 	int		fd;
-	
-	count = 0;
-	fd = open("1time194fir_3", O_CREAT | O_RDWR, 0777);
+
+	num = ft_itoa(i);	
+	name = ft_strjoin(FILENAME, num);
+	free(num);
+	fd = open(name, O_CREAT | O_RDWR, 0777);
 	line = readline("> ");
 	while (line && ft_strcmp(cur->args[0], line))
 	{
@@ -28,13 +31,14 @@ int	ft_create_new_file(t_cmd *cur)
 	free(cur->cmd);
 	cur->cmd = ft_strdup("<");
 	free(cur->args[0]);
-	cur->args[0] = ft_strdup("1time194fir_3");
+	cur->args[0] = name;
 	close(fd);
 	return (0);
 }
 
 int	ft_comm_check(t_cmd **cmd)
 {
+	int		i;
 	t_cmd	*tmp;
 	t_cmd	*last_cmd;
 	tmp = *cmd;
@@ -51,11 +55,18 @@ int	ft_comm_check(t_cmd **cmd)
 			return (ft_print_syntaxerror());
 		if ((tmp->cmd[0]) == '|' && tmp->active && (tmp == *cmd || (last_cmd->cmd[0] == '|' && last_cmd->active)))
 			return (ft_print_syntaxerror());
-		if (ft_strcmp(tmp->cmd, "<<") == 0)
-		{
-			ft_create_new_file(tmp);
-		}
 		last_cmd = tmp;
+		tmp = tmp->next;
+	}
+	tmp = *cmd;
+	i = 1;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->cmd, "<<") == 0)
+			{
+				ft_create_new_file(tmp, i);
+				i++;
+			}
 		tmp = tmp->next;
 	}
 	return (1);
