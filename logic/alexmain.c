@@ -49,13 +49,13 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 		//+++
 		status_erorr = comand_redirect(cmd);
 	else
-		comand_exve(cmd, envp, o_env);
+		status_erorr = comand_exve(cmd, envp, o_env);
 //-------------------------------------------
 	if (fd_in) {
 		close(fd_in);
 		dup2(save_stdin, 0);
 	}
-	return (0);
+	return (status_erorr);
 }
 
 int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
@@ -63,10 +63,11 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 	t_cmd *cmd = *cmd_adres;
 	t_env *env = *env_adres;
 
+	status_erorr = 0;
 	if (pipe_exist(cmd))
 		logic_pipe(cmd, env, origin_env, count_pipe(cmd) + 2);
 	else
 		find_comand(cmd, env, origin_env);
-	printf("%d\n", status_erorr);
+	printf("end %d\n", status_erorr);
 	return (0);
 }

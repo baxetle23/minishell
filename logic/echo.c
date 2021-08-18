@@ -83,11 +83,6 @@ int	comand_echo(t_cmd *cmd)
 	{
 		write(1, "test33\n", 7);
 		printf("i = %d, flag = %d, buffer = %s\n", i, flag, buffer[i - 1 + flag]);
-		if (buffer[i - 1 + flag] == NULL)
-		{
-			buffer[i - 1 + flag] = ft_strdup("\n");
-			return (output_to_fd(buffer, cmd));
-		}
 		tmp = buffer[i - 1 + flag];
 		buffer[i - 1 + flag] = ft_strjoin(tmp, "\n");
 		free(tmp);

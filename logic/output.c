@@ -2,8 +2,6 @@
 
 int free_buffer(char **buffer)
 {
-		
-
 	int i = 0;
 	if (buffer == NULL)
 		return (1);
@@ -22,6 +20,9 @@ int	ft_putbuffer_fd(char **buffer, int fd, t_cmd *cmd)
 {
 	int i;
 	i = 0;
+
+
+
 	while(buffer[i])
 	{
 		ft_putstr_fd(buffer[i], fd);
