@@ -61,10 +61,13 @@ int	comand_echo(t_cmd *cmd)
 	int		flag;
 
 	int i = 0;
+	tmp = NULL;
 	flag = 0;
-	while (cmd->args[i])
-		i++;
-	flag = get_memory_for_flag(cmd->flags[1]);
+	if (cmd->args)
+		while (cmd->args[i])
+			i++;
+	if (cmd->flags && cmd->flags[0])
+		flag = get_memory_for_flag(cmd->flags[1]);
 	buffer = (char **)malloc(sizeof(char *) * (i + 1 + flag));
 	buffer[i + flag] = NULL;
 	i = 0;
@@ -75,11 +78,21 @@ int	comand_echo(t_cmd *cmd)
 		buffer[i + flag] = ft_strdup(cmd->args[i]);
 		i++;
 	}
+	write(1, "test\n", 5);
 	if (!ft_strcmp_echo(cmd->flags[1]))
 	{
+		write(1, "test33\n", 7);
+		printf("i = %d, flag = %d, buffer = %s\n", i, flag, buffer[i - 1 + flag]);
+		if (buffer[i - 1 + flag] == NULL)
+		{
+			buffer[i - 1 + flag] = ft_strdup("\n");
+			return (output_to_fd(buffer, cmd));
+		}
 		tmp = buffer[i - 1 + flag];
 		buffer[i - 1 + flag] = ft_strjoin(tmp, "\n");
 		free(tmp);
 	}
+	write(1, "test22\n", 7);
+
 	return (output_to_fd(buffer, cmd));
 }

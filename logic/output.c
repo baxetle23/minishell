@@ -2,13 +2,19 @@
 
 int free_buffer(char **buffer)
 {
+		
+
 	int i = 0;
+	if (buffer == NULL)
+		return (1);
 	while (buffer[i])
 	{
 		free(buffer[i]);
 		i++;
 	}
 	free(buffer);
+	ft_putendl_fd("test1", 1);
+
 	return (1);
 }
 
