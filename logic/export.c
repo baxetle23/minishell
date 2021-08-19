@@ -54,19 +54,20 @@ int	add_variable(char *variable, t_env *env)
 	{
 		ft_putstr_fd(variable, 2);
 		ft_putendl_fd(": not a valid identifier", 2);
+		free(new);
 		return (1);
 	}
 	get_key_value(&key, &value, variable);
 	if (value && ft_find_list_env(key, &env))
 	{
-		new = ft_find_list_env(key, &env);
-		free(new->value);
-		new->value = value;
+		change_value(new, key, env, value);
 	}
 	else
 	{
 		if (!ft_find_list_env(key, &env))
 			ft_add_new_env(new, key, value, env);
+		else
+			free_function(key, value, new);
 	}
 	return (0);
 }

@@ -176,10 +176,15 @@ int		comand_revers_dredirect(t_cmd *cmd);
 int		comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
 
 void	call_execve_process(t_cmd *cmd, t_env *envp, char **o_env);
+int		check_path(t_cmd *cmd, t_env *envp, char **o_env);
 void	free_memory(char **split1, char **split2);
 
 int		sort_env(t_env *env);
 void	print_sort_envp(t_env *envp, int fd);
+
+void	free_function(char *key, char *value, t_env *env);
+void	free_memory(char **split1, char **split2);
+void	change_value(t_env *new, char *key, t_env *env, char *value);
 
 //redirect
 int		output_to_fd(char **buffer, t_cmd *cmd);
@@ -196,6 +201,7 @@ int		logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc);
 void	term(pid_t *pids, int n, int g_fd[2][2]);
 void	term1(pid_t *pids, int n, int g_fd[2][2]);
 t_cmd	*get_cmd(t_cmd *cmd, int pos);
+void	init_for_pipe(int *i, pid_t **pids, int *save, int argc);
 
 //--------------------------------------------------------
 
