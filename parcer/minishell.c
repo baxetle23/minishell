@@ -2,28 +2,18 @@
 
 void	ft_get_signals(int id)
 {
+	sigignore(SIGQUIT);
 	if (id == SIGINT)
 	{
-	//	rl_on_new_line();
-	//	rl_redisplay();
-	//	write(1, EYESES, 5);
-	//	rl_replace_line("", 0);
-	//	rl_on_new_line();
-		
-	//	rl_replace_line("", 0);
 		write(1, "\n", 2);
-	//	rl_redisplay();
-		
-	//	printf(EYESES);
-
-	//	rl_on_new_line();
-		
-	//	rl_redisplay();
-	//	printf("\x1b[2D");
+		rl_on_new_line();
+		rl_redisplay();
+		//rl_replace_line();
+		write(1, EYESES, 8);
 	}
 	if (id == SIGQUIT)
 	{
-		printf("\x1b[2D\n");
+		write(1, "\x1b[2D\n", 6);
 	}
 }
 
@@ -45,7 +35,8 @@ int	ft_minishell(char *line, t_env **env, t_cmd **cmd, char **envir)
 {
 	if (line == NULL)
 	{
-		printf("\x1b[2Dexit\n");
+		printf("exit\n");//\x1b[2D
+	//	rl_clear_hystory();
 		exit(0);
 	}
 	if (line[0] != '\0' && !ft_only_tabs(line))
@@ -70,7 +61,6 @@ int	main(int argc, char **argv, char **envir)
 		ft_terminate("malloc error");
 	signal(SIGINT, ft_get_signals);
 	sigignore(SIGQUIT);
-	//signal(SIGQUIT, ft_get_signals);
 	while (1)
 	{
 		cmd = NULL;
@@ -79,4 +69,4 @@ int	main(int argc, char **argv, char **envir)
 	return (0);
 }
 
-//readline, rl_on_new_line, rl_replace_line, rl_redisplay, add_history
+//readline, rl_on_new_line, rl_replace_line, rl_redisplay, add_history, rl_clear_hystory

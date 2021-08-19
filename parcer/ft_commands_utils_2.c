@@ -48,3 +48,49 @@ t_words	*ft_skip_redir_i_flags(t_words **words, int i, int flags_c)
 	}
 	return (tmp);
 }
+
+int	ft_get_count_flags(t_words **words, int	i)
+{
+	t_words	*tmp;
+
+	tmp = ft_skip_redir(words, &i);
+	while (tmp && !ft_is_pipe(tmp) && ((ft_is_redirect(tmp))
+			|| tmp->word[0] == '-'))
+	{
+		if (ft_is_redirect(tmp))
+		{
+			tmp = tmp->next;
+			if (tmp && !ft_is_pipe(tmp))
+				tmp = tmp->next;
+		}
+		else
+		{
+			i++;
+			tmp = tmp->next;
+		}
+	}
+	return (i);
+}
+
+int	ft_get_count_args(t_words **words, int	i, int flags_c)
+{
+	t_words	*tmp;
+
+	tmp = ft_skip_redir_i_flags(words, i, flags_c);
+	i = 0;
+	while (tmp && !ft_is_pipe(tmp))
+	{
+		if (ft_is_redirect(tmp))
+		{
+			tmp = tmp->next;
+			if (tmp && !ft_is_pipe(tmp))
+				tmp = tmp->next;
+		}
+		else
+		{
+			i++;
+			tmp = tmp->next;
+		}
+	}
+	return (i);
+}

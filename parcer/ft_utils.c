@@ -39,7 +39,6 @@ void	ft_remove_files(t_cmd **cmd)
 			if (tmp->args[0] && !ft_strncmp(tmp->args[0], FILENAME,
 					ft_strlen(FILENAME)))
 			{
-				printf("\nfile: %s\n", tmp->args[0]);
 				unlink(tmp->args[0]);
 			}
 		}

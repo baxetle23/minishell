@@ -108,6 +108,8 @@ int		ft_lst_cmd_length(t_cmd **cmd);
 
 t_words	*ft_skip_redir(t_words **words, int *i);
 t_words	*ft_skip_redir_i_flags(t_words **words, int i, int flags_c);
+int		ft_get_count_flags(t_words **words, int	i);
+int		ft_get_count_args(t_words **words, int	i, int flags_c);
 
 char	*ft_get_cmd_by_start(t_words **words, int start);
 void	ft_add_all_redirects(t_words **words, int start, t_cmd **start_cmd);

@@ -35,7 +35,7 @@ RM		= rm -f
 
 $(NAME):	$(OBJ) $(AOBJ) $(HEAD)
 	$(MAKE) -C $(DIRL)
-	$(CC) $(CFLAG) $(LIB) $(OBJ) $(AOBJ) -lreadline -o $(NAME)
+	$(CC) $(CFLAG) $(LIB) $(OBJ) $(AOBJ) -lreadline -ltermcap -g -L/Users/$(USER)/.brew/Cellar/readline/8.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1/include -o $(NAME)
 	@echo $(NAME) is compiled!
 
 all: $(NAME)

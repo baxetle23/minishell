@@ -75,7 +75,7 @@ void	ft_change_double_red(t_cmd **cmd)
 			ft_create_new_file(tmp, i);
 			i++;
 		}
-		else if (!ft_strncmp_notregistr(tmp->cmd, "echo", 4))
+		else if (!ft_strncmp_nr(tmp->cmd, "echo", 4))
 		{
 			ft_echo_fill(tmp);
 		}
