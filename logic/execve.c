@@ -40,6 +40,15 @@ int	absolute_path(char *name_programm)
 	return (0);
 }
 
+char	*exit_with_print(t_pipex *a, int flag)
+{
+	ft_putstr_fd(a->comand[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
+	if (flag)
+		free_memory(a->strings_way, a->comand);
+	exit (127);
+}
+
 char	*get_addres(char **envp, t_env *my_envp, char *cmd_string)
 {
 	t_pipex	a;
@@ -48,15 +57,8 @@ char	*get_addres(char **envp, t_env *my_envp, char *cmd_string)
 	a.i = 0;
 	path = ft_find_list_env("PWD", &my_envp);
 	while (ft_strncmp(envp[a.i], "PATH=", 5))
-	{
-		a.i++;
-		if (a.i == 1000)
-		{
-			ft_putstr_fd(a.comand[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-			exit (127);
-		}
-	}
+		if (a.i++ == 1000)
+			exit_with_print(&a, 0);
 	a.strings_way = ft_split(envp[a.i] + 5, ':');
 	a.comand = ft_split(cmd_string, ' ');
 	a.i = 0;
@@ -73,10 +75,7 @@ char	*get_addres(char **envp, t_env *my_envp, char *cmd_string)
 		free(a.addres_full);
 		a.i++;
 	}
-	ft_putstr_fd(a.comand[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
-	free_memory(a.strings_way, a.comand);
-	exit (127);
+	return (exit_with_print(&a, 1));
 }
 
 void	call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)

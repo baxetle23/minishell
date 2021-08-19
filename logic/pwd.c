@@ -2,7 +2,7 @@
 
 int	comand_pwd(t_cmd *cmd, t_env *env, char **env_o)
 {
-	int i;
+	int		i;
 	t_env	*tmp;
 	char	**buffer;
 	char	*temp;

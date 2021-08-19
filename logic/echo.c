@@ -18,7 +18,6 @@ int	comand_echo(t_cmd *cmd)
 {
 	int		fd;
 
-	write(1, "test\n", 5);
 	fd = find_file_des(cmd);
 	if (fd < 0)
 	{

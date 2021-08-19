@@ -47,7 +47,7 @@
 # define INFINITY "\xE2\x99\xBE"
 # define KIRPICH "\xE2\x9B\x94"
 
-# define FILENAME ".tmp/1time194fir_"
+# define FILENAME "./.tmp/1time194fir_"
 
 typedef struct s_words
 {
@@ -136,7 +136,7 @@ t_env	*ft_find_list_env(char *find, t_env **env);
 //--------------------------------------------------------
 int		mainalex(t_cmd **cmd_adres, t_env **env, char **origin);
 
-int		ft_strncmp_notregistr(const char *s1, const char *s2, size_t n);
+int		ft_strncmp_nr(const char *s1, const char *s2, size_t n);
 
 int		find_comand(t_cmd *cmd, t_env *envp, char **o_env);
 int		comand_echo(t_cmd *cmd);
@@ -154,10 +154,14 @@ int		comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
 void	call_execve_process(t_cmd *cmd, t_env *envp, char **o_env);
 void	free_memory(char **split1, char **split2);
 
+int		sort_env(t_env *env);
+void	print_sort_envp(t_env *envp, int fd);
+
 //redirect
 int		output_to_fd(char **buffer, t_cmd *cmd);
 t_cmd	*find_redirect(t_cmd *cmd);
 int		find_file_des(t_cmd *cmd);
+int		print_mistake(char *file);
 //revers redirect
 t_cmd	*find_revers_redirect(t_cmd *cmd);
 int		find_infile_des(t_cmd *cmd);
@@ -165,6 +169,9 @@ int		find_infile_des(t_cmd *cmd);
 t_cmd	*pipe_exist(t_cmd *cmd);
 int		count_pipe(t_cmd *cmd);
 int		logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc);
+void	term(pid_t *pids, int n, int g_fd[2][2]);
+void	term1(pid_t *pids, int n, int g_fd[2][2]);
+t_cmd	*get_cmd(t_cmd *cmd, int pos);
 
 //--------------------------------------------------------
 

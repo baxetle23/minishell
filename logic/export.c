@@ -1,99 +1,28 @@
 #include "../includes/minishell.h"
 
-void print_sort_envp(t_env *envp, int fd)
+int	check_variable(char *name)
 {
-	t_env *tmp = envp;
-	while (tmp)
-	{
-		if (tmp->value)
-		{
-			ft_putstr_fd("declare -x ", fd);
-			ft_putstr_fd(tmp->key, fd);
-			ft_putstr_fd("=\"", fd);
-			ft_putstr_fd(tmp->value, fd);
-			ft_putstr_fd("\"\n", fd);
-		}
-		else
-		{
-			ft_putstr_fd("declare -x ", fd);
-			ft_putstr_fd(tmp->key, fd);
-			ft_putstr_fd("=\"\n", fd);
-		}
-		tmp = tmp->next;
-	}
-}
-
-int compare_env_element(const char *s1, const char *s2)
-{
-	int i;
-
-	i = 0;
-	while(s1[i] && s2[i])
-	{
-		if (s1[i] != s2[i])
-			return s1[i] - s2[i];
-		i++;
-	}
-	return (s1[i] - s2[i]);
-}
-
-int	sort_env(t_env *env)
-{
-	t_env *start;
-	t_env *tmp;
-	char *tmp2;
-	int flag;
-
-	start = env;
-	while (start->next)
-	{
-		flag = 0;
-		tmp = start;
-		while (tmp->next)
-		{
-			//printf("compare %s and %s\n", tmp->key, tmp->next->key);
-			if (compare_env_element(tmp->key, tmp->next->key) > 0)
-			{
-				//printf("dvigaem\n");
-				tmp2 = tmp->key;
-				tmp->key = tmp->next->key;
-				tmp->next->key = tmp2;
-
-				tmp2 = tmp->value;
-				tmp->value = tmp->next->value;
-				tmp->next->value = tmp2;
-				flag = 1;
-			}
-		tmp = tmp->next;
-		}
-		if (flag == 0)
-			break ;
-	}
-	return (0);
-}
-
-int check_variable(char *name)
-{
-	int i;
+	int	i;
 
 	i = 0;
 	while (name[i] && name[i] != '=')
 	{
 		if (i == 0 && !ft_isalpha(name[i]))
-			return 1;
-		if (i != 0 && !ft_isalpha(name[i]) && !ft_isdigit(name[i]) && name[i] != '_')
-			return 1;
+			return (1);
+		if (i != 0 && !ft_isalpha(name[i])
+			&& !ft_isdigit(name[i]) && name[i] != '_')
+			return (1);
 		i++;
 	}
 	return (0);
 }
 
-void get_key_value(char **key, char **value, char *variable)
+void	get_key_value(char **key, char **value, char *variable)
 {
-	char *separator;
-	separator = ft_strchr(variable, '=');
+	char	*separator;
 
-	if(separator)
+	separator = ft_strchr(variable, '=');
+	if (separator)
 	{
 		*separator = 0;
 		*key = ft_strdup(variable);
@@ -106,17 +35,26 @@ void get_key_value(char **key, char **value, char *variable)
 	}
 }
 
-int add_variable(char *variable, t_env* env) 
+void	ft_add_new_env(t_env *new, char *key, char *value,	t_env *env)
+{
+	new->key = key;
+	new->value = value;
+	new->next = NULL;
+	ft_add_env(&env, new);
+}
+
+int	add_variable(char *variable, t_env *env)
 {
 	t_env	*new;
 	char	*key;
 	char	*value;
 
 	new = (t_env *)malloc(sizeof(t_env));
-	if (check_variable(variable)) {
+	if (check_variable(variable))
+	{
 		ft_putstr_fd(variable, 2);
 		ft_putendl_fd(": not a valid identifier", 2);
-		return 1;
+		return (1);
 	}
 	get_key_value(&key, &value, variable);
 	if (value && ft_find_list_env(key, &env))
@@ -128,12 +66,7 @@ int add_variable(char *variable, t_env* env)
 	else
 	{
 		if (!ft_find_list_env(key, &env))
-		{
-			new->key = key;
-			new->value = value;
-			new->next = NULL;
-			ft_add_env(&env, new);
-		}
+			ft_add_new_env(new, key, value, env);
 	}
 	return (0);
 }
@@ -141,16 +74,20 @@ int add_variable(char *variable, t_env* env)
 int	comand_export(t_cmd *cmd, t_env *env)
 {
 	int	fd;
-	
+	int	i;
+
 	fd = find_file_des(cmd);
 	if (fd < 0)
 		return (1);
-	if (!cmd->args[0]) {
+	if (!cmd->args[0])
+	{
 		sort_env(env);
 		print_sort_envp(env, fd);
 		return (0);
-	} else {
-		int i = -1;
+	}
+	else
+	{
+		i = -1;
 		while (cmd->args[++i])
 		{
 			if (add_variable(cmd->args[i], env))

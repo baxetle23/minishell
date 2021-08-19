@@ -2,27 +2,27 @@
 
 int	search_name_comand(t_cmd *cmd, t_env *envp, char **o_env)
 {
-	if (!ft_strncmp_notregistr("echo", cmd->cmd, ft_strlen(cmd->cmd)))
+	if (!ft_strncmp_nr("echo", cmd->cmd, 4))
 		g_status_error = comand_echo(cmd);
-	else if (!ft_strncmp_notregistr("cd", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_nr("cd", cmd->cmd, 2))
 		g_status_error = comand_cd(cmd, envp);
-	else if (!ft_strncmp_notregistr("pwd", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_nr("pwd", cmd->cmd, 3))
 		g_status_error = comand_pwd(cmd, envp, o_env);
-	else if (!ft_strncmp_notregistr("export", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_nr("export", cmd->cmd, 6))
 		g_status_error = comand_export(cmd, envp);
-	else if (!ft_strncmp_notregistr("unset", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_nr("unset", cmd->cmd, 5))
 		g_status_error = comand_unset(cmd, envp);
-	else if (!ft_strncmp_notregistr("env", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_nr("env", cmd->cmd, 3))
 		g_status_error = comand_env(cmd, envp);
-	else if (!ft_strncmp_notregistr("exit", cmd->cmd, ft_strlen(cmd->cmd)))
+	else if (!ft_strncmp_nr("exit", cmd->cmd, 4))
 		g_status_error = comand_exit(cmd);
-	else if (!ft_strncmp_notregistr("<", cmd->cmd,
-			ft_strlen(cmd->cmd)) && cmd->active)
+	else if (!ft_strncmp_nr("<", cmd->cmd,
+			1) && cmd->active)
 		g_status_error = comand_revers_redirect(cmd);
-	else if ((!ft_strncmp_notregistr(">", cmd->cmd,
-				ft_strlen(cmd->cmd))
-			|| !ft_strncmp_notregistr(">>", cmd->cmd,
-				ft_strlen(cmd->cmd))) && cmd->active)
+	else if ((!ft_strncmp_nr(">", cmd->cmd,
+				1)
+			|| !ft_strncmp_nr(">>", cmd->cmd,
+				2)) && cmd->active)
 		g_status_error = comand_redirect(cmd);
 	else
 		g_status_error = comand_exve(cmd, envp, o_env);
@@ -43,12 +43,12 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 
 	init_infile_des(&fd_in, &save_stdin);
 	tmp = cmd;
-	if (ft_strncmp_notregistr("<", tmp->cmd,
+	if (ft_strncmp_nr("<", tmp->cmd,
 			ft_strlen(tmp->cmd)) && find_revers_redirect(tmp))
 	{
 		fd_in = find_infile_des(tmp);
-		if (!ft_strncmp_notregistr(">", cmd->next->cmd,
-				ft_strlen(cmd->next->cmd)) || !ft_strncmp_notregistr(">>",
+		if (!ft_strncmp_nr(">", cmd->next->cmd,
+				ft_strlen(cmd->next->cmd)) || !ft_strncmp_nr(">>",
 				cmd->next->cmd, ft_strlen(cmd->next->cmd)))
 			find_file_des(tmp);
 		if (fd_in == -1)

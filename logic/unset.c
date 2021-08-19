@@ -2,11 +2,11 @@
 
 void	ft_delete_list_env(char *key, t_env **env)
 {
-	t_env *tmp;
-	t_env *tmp_2;
+	t_env	*tmp;
+	t_env	*tmp_2;
 
 	tmp = *env;
-	while(tmp)
+	while (tmp)
 	{
 		if (!ft_strcmp(tmp->next->key, key))
 		{
