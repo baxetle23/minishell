@@ -26,3 +26,13 @@ int	ft_check_acitve(t_words **words, int start)
 		tmp = tmp->next;
 	return (tmp->active);
 }
+
+int	ft_check_redir(t_cmd *tmp)
+{
+	return ((tmp->cmd[0] == '<' || tmp->cmd[0] == '>') && tmp->active);
+}
+
+int	ft_check_pipe(t_cmd *tmp)
+{
+	return (tmp->cmd[0] == '|' && tmp->active);
+}

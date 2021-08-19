@@ -47,7 +47,7 @@
 # define INFINITY "\xE2\x99\xBE"
 # define KIRPICH "\xE2\x9B\x94"
 
-# define FILENAME ".tmp/1time194fir_"
+# define FILENAME "./.tmp/1time194fir_"
 
 typedef struct s_words
 {
@@ -86,18 +86,28 @@ int		g_status_error;
 
 void	ft_add_all_redirects(t_words **words, int start, t_cmd **start_cmd);
 int		ft_count_red(t_words **words, int start);
+void	ft_change_double_red(t_cmd **cmd);
 
+int		ft_create_new_file(t_cmd *cur, int i);
 int		ft_comm_check(t_cmd **cmd);
+void	ft_echo_fill(t_cmd *cmd);
 
 int		ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir);
+int		ft_check_redir(t_cmd *tmp);
+int		ft_check_pipe(t_cmd *tmp);
 
 char	*ft_strdup_part(const char *s1, int start, int len);
 char	*ft_strjoin_m(char *s1, char *s2);
+void	ft_switch_spaces(int *i, char *line);
+int		ft_spec_char(char c);
 
 void	ft_print_lst_words(t_words **words);
 void	ft_print_lst_cmds(t_cmd **cmd);
 
 int		ft_lst_cmd_length(t_cmd **cmd);
+
+t_words	*ft_skip_redir(t_words **words, int *i);
+t_words	*ft_skip_redir_i_flags(t_words **words, int i, int flags_c);
 
 char	*ft_get_cmd_by_start(t_words **words, int start);
 void	ft_add_all_redirects(t_words **words, int start, t_cmd **start_cmd);
@@ -105,7 +115,7 @@ int		ft_simbols_in_word(char *word);
 int		ft_check_acitve(t_words **words, int start);
 int		ft_count_red(t_words **words, int start);
 
-void	ft_get_commands(t_words **words, char *line, t_cmd **cmd);
+void	ft_get_comm(t_words **words, t_cmd **cmd, int start, int old_start);
 
 int		ft_simbols_in_word(char *word);
 t_cmd	*ft_lstnew_cmd(char *cmd, char **flags, char **args, int active);
@@ -125,13 +135,22 @@ void	ft_lstadd_word(t_words **lst, t_words *new);
 int		ft_addword(char *word, t_words **lst, int active);
 void	ft_lstclear_words(t_words **env);
 
-void	ft_switch_spaces(int *i, char *line);
+int		ft_print_syntaxerror(void);
+
 void	ft_pipe(int *i, char *line, t_words **words);
+char	*ft_dollar(int *i, char *line, t_env **env);
+char	*ft_char(int *i, char *line, t_env **env);
+char	*ft_upostr(int *i, char *line);
+char	*ft_kavichki(int *i, char *line, t_env **env);
 
 char	**get_empty_m(void);
 void	ft_free_mas(char **t);
 void	ft_terminate(char *s);
 void	ft_remove_files(t_cmd **cmd);
+void	ft_clear_all(t_words **words, t_cmd **cmd, char *line, char *res_word);
+
+int		ft_is_redirect(t_words *tmp);
+int 	ft_is_pipe(t_words *tmp);
 
 int		ft_get_list_environments(char **e, t_env **env);
 t_env	*ft_find_list_env(char *find, t_env **env);

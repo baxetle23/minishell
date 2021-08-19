@@ -1,5 +1,16 @@
 #include "../includes/minishell.h"
 
+void	ft_switch_spaces(int *i, char *line)
+{
+	while (line[*i] == ' ')
+		*i = *i + 1;
+}
+
+int	ft_spec_char(char c)
+{
+	return (c == ' ' || c == '|' || c == '>' || c == '<');
+}
+
 char	*ft_strdup_part(const char *s1, int start, int len)
 {
 	int		i;

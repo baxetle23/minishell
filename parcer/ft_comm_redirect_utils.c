@@ -60,3 +60,25 @@ int	ft_count_red(t_words **words, int start)
 	}
 	return (res);
 }
+
+void	ft_change_double_red(t_cmd **cmd)
+{
+	int		i;
+	t_cmd	*tmp;
+
+	tmp = *cmd;
+	i = 1;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->cmd, "<<") == 0)
+		{
+			ft_create_new_file(tmp, i);
+			i++;
+		}
+		else if (!ft_strncmp_notregistr(tmp->cmd, "echo", 4))
+		{
+			ft_echo_fill(tmp);
+		}
+		tmp = tmp->next;
+	}
+}

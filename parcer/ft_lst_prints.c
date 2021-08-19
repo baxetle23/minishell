@@ -17,7 +17,6 @@ void	ft_print_mas(char **mas)
 void	ft_print_lst_cmds(t_cmd **cmd)
 {
 	t_cmd	*tmp;
-	int		i;
 
 	tmp = *cmd;
 	while (tmp)

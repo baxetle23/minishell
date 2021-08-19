@@ -1,23 +1,21 @@
 #include "../includes/minishell.h"
 
-char	**ft_get_flags(t_words **words, int start, int flags_count)
+char	**ft_get_flags(t_words **words, int i, int flags_c)
 {
 	char	**res;
 	t_words	*tmp;
-	int		i;
 
 	tmp = *words;
-	i = start;
 	while (i--)
 		tmp = tmp->next;
-	res = (char **)malloc(sizeof(char *) * (flags_count + 1));
+	res = (char **)malloc(sizeof(char *) * (flags_c + 1));
 	i = 0;
-	while (i < flags_count)
+	while (i < flags_c)
 	{
-		if ((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active)
+		if (ft_is_redirect(tmp))
 		{
 			tmp = tmp->next;
-			if (tmp && !(tmp->word[0] == '|' && tmp->active))
+			if (tmp && !ft_is_pipe(tmp))
 				tmp = tmp->next;
 		}
 		else
@@ -30,127 +28,44 @@ char	**ft_get_flags(t_words **words, int start, int flags_count)
 	return (res);
 }
 
-char	**ft_get_args(t_words **words, int start, int flags_count, int args_count)
+char	**ft_get_args(t_words **words, int i, int flags_c, int args_c)
 {
 	char	**res;
 	t_words	*tmp;
-	int		i;
 
-	tmp = *words;
-	i = start;
-
-	while (i--)
-	{
-		tmp = tmp->next;
-	}
+	tmp = ft_skip_redir_i_flags(words, i, flags_c);
+	res = (char **)malloc(sizeof(char *) * (args_c + 1));
 	i = 0;
-	while (flags_count)
+	while (i < args_c)
 	{
-		if ((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active)
+		if (ft_is_redirect(tmp))
 		{
 			tmp = tmp->next;
-			if (tmp && !(tmp->word[0] == '|' && tmp->active))
+			if (tmp && !ft_is_pipe(tmp))
 				tmp = tmp->next;
 		}
 		else
 		{
-			tmp = tmp->next;
-			flags_count--;
-		}
-	}
-
-	res = (char **)malloc(sizeof(char *) * (args_count + 1));
-	i = 0;
-	while (i < args_count)
-	{
-		if ((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active)
-		{
-			tmp = tmp->next;
-			if (tmp && !(tmp->word[0] == '|' && tmp->active))
-				tmp = tmp->next;
-		}
-		else{
 			res[i++] = ft_strdup(tmp->word);
 			tmp = tmp->next;
 		}
 	}
-	//write(1, "yep!", 4);
 	res[i] = NULL;
 	return (res);
 }
 
-int	ft_get_count_flags(t_words **words, int	list_start)
+int	ft_get_count_flags(t_words **words, int	i)
 {
 	t_words	*tmp;
-	int		i;
 
-	tmp = *words;
-	i = list_start; //можно поменять на еще +1 и перейти на самый первый жлемент, с которого уже можно считать
-	while (i--)
-		tmp = tmp->next;
-	while (tmp && ((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active))
+	tmp = ft_skip_redir(words, &i);
+	while (tmp && !ft_is_pipe(tmp) && ((ft_is_redirect(tmp))
+			|| tmp->word[0] == '-'))
 	{
-		tmp = tmp->next;
-		if (tmp && !(tmp->word[0] == '|' && tmp->active))
-				tmp = tmp->next;
-	}
-	i = 0;
-	if (tmp && !(tmp->word[0] == '|' && tmp->active) && !((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active))
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	while (tmp && !(tmp->word[0] == '|' && tmp->active) && (((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active) || tmp->word[0] == '-'))
-	{
-		//printf("proba i %d\n", i);
-		if ((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active)
+		if (ft_is_redirect(tmp))
 		{
 			tmp = tmp->next;
-			if (tmp && !(tmp->word[0] == '|' && tmp->active))
-				tmp = tmp->next;
-		}
-		else
-		{
-			i++;
-			tmp = tmp->next;
-		}
-		
-	}
-	return (i);
-}
-
-int	ft_get_count_args(t_words **words, int	list_start, int flags_count) //исправить редирект(чтобы аргументы добавлялись)
-{
-	t_words	*tmp;
-	int		i;
-
-	tmp = *words;
-	i = list_start;
-	while (i--)
-	{
-		tmp = tmp->next;
-	}
-	i = 0;
-	while (flags_count)
-	{
-		if ((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active)
-		{
-			tmp = tmp->next;
-			if (tmp && !(tmp->word[0] == '|' && tmp->active))
-				tmp = tmp->next;
-		}
-		else
-		{
-			tmp = tmp->next;
-			flags_count--;
-		}
-	}
-	while (tmp && !(tmp->word[0] == '|' && tmp->active))
-	{
-		if ((tmp->word[0] == '<' || tmp->word[0] == '>') && tmp->active)
-		{
-			tmp = tmp->next;
-			if (tmp && !(tmp->word[0] == '|' && tmp->active))
+			if (tmp && !ft_is_pipe(tmp))
 				tmp = tmp->next;
 		}
 		else
@@ -162,29 +77,43 @@ int	ft_get_count_args(t_words **words, int	list_start, int flags_count) //исп
 	return (i);
 }
 
-void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
+int	ft_get_count_args(t_words **words, int	i, int flags_c)
 {
-	(void)	line;
+	t_words	*tmp;
+
+	tmp = ft_skip_redir_i_flags(words, i, flags_c);
+	i = 0;
+	while (tmp && !ft_is_pipe(tmp))
+	{
+		if (ft_is_redirect(tmp))
+		{
+			tmp = tmp->next;
+			if (tmp && !ft_is_pipe(tmp))
+				tmp = tmp->next;
+		}
+		else
+		{
+			i++;
+			tmp = tmp->next;
+		}
+	}
+	return (i);
+}
+
+void	ft_get_comm(t_words **words, t_cmd **cmd_input, int start, int old_st)
+{
 	t_cmd	*cmd;
-	t_cmd	*start_cmd;
 	char	*command;
 	char	*tmp;
-	int		flags_count;
-	int		args_count;
-	int		start;
-	int		old_start;
+	int		flags_c;
+	int		args_c;
 
-	//start_cmd = *cmd_input;
-	cmd = NULL; // can be delete;
+	cmd = NULL;
 	start = 0;
 	while (start < ft_lst_words_length(words))
 	{
-		old_start = start;
-		//printf("\nstart from: %d\n", start);
-	//	if (ft_strcmp(ft_get_cmd_by_start(words, start), "|"))
+		old_st = start;
 	    command = ft_get_cmd_by_start(words, start);
-		//printf("comand: %s\n", command);
-		
 		if (command[0] == '|' && ft_check_acitve(words, start))
 		{
 			start = start + 1;
@@ -193,17 +122,13 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 		}
 		else
 		{
-			flags_count = ft_get_count_flags(words, start);
-			//printf("count of flags(-): %d\n", flags_count);
-		
-			args_count = ft_get_count_args(words, start, flags_count);
-			//printf("count of args(-): %d\n", args_count);
-			
-			if (args_count || flags_count)
+			flags_c = ft_get_count_flags(words, start);
+			args_c = ft_get_count_args(words, start, flags_c);
+			if (args_c || flags_c)
 			{
 				cmd = ft_lstnew_cmd(command,
-					ft_get_flags(words, start, flags_count),
-					ft_get_args(words, start, flags_count, args_count), 0);
+						ft_get_flags(words, start, flags_c),
+						ft_get_args(words, start, flags_c, args_c), 0);
 				tmp = cmd->cmd;
 				cmd->cmd = ft_strdup(cmd->flags[0]);
 				free(tmp);
@@ -211,14 +136,8 @@ void	ft_get_commands(t_words **words, char *line, t_cmd **cmd_input)
 			}
 			else
 				free(command);
-			//printf("count of red: %d\n", ft_count_red(words, start));
-			ft_add_all_redirects(words, old_start, cmd_input);
-
-			start = start + flags_count + args_count + ft_count_red(words, old_start);
+			ft_add_all_redirects(words, old_st, cmd_input);
+			start = start + flags_c + args_c + ft_count_red(words, old_st);
 		}
-		//printf("next start from: %d\n", start);
 	}
-	//printf("\nPRINT\n");
-//	ft_print_lst_cmds(cmd_input);
-//	ft_lstclear_cmds(&start_cmd);
 }

@@ -2,12 +2,6 @@
 
 #include "../includes/minishell.h"
 
-int	ft_print_syntaxerror(void)
-{
-	write(1, "!\xF0\x9F\x91\x80!: syntax error\n", 21);
-	return (0);
-}
-
 int	ft_create_new_file(t_cmd *cur, int i)
 {
 	char	*line;
@@ -15,7 +9,7 @@ int	ft_create_new_file(t_cmd *cur, int i)
 	char	*num;
 	int		fd;
 
-	num = ft_itoa(i);	
+	num = ft_itoa(i);
 	name = ft_strjoin(FILENAME, num);
 	free(num);
 	fd = open(name, O_CREAT | O_RDWR, 0777);
@@ -51,7 +45,7 @@ char	*ft_check_echo_flags(t_cmd *cmd)
 {
 	char	*res;
 	int		i;
-	
+
 	if (cmd->flags[1] == NULL)
 		return (NULL);
 	res = NULL;
@@ -72,22 +66,18 @@ char	*ft_check_echo_flags(t_cmd *cmd)
 
 void	ft_echo_fill(t_cmd *cmd)
 {
-	char	**res_flags;
 	char	**res_args;
-	char	*tmp_arg;
 	int		i;
 
 	if (cmd->args[0] || cmd->flags[1])
 		res_args = (char **)malloc(sizeof(char *) + 1);
 	else
 		return ;
-	
 	res_args[0] = ft_check_echo_flags(cmd);
 	res_args[1] = NULL;
 	i = 0;
 	while (cmd->args[i])
 	{
-		//write(1, "!", 1);
 		res_args[0] = ft_strjoin_m(res_args[0], ft_strdup(cmd->args[i]));
 		if (cmd->args[i + 1])
 			res_args[0] = ft_strjoin_m(res_args[0], ft_strdup(" "));
@@ -99,34 +89,19 @@ void	ft_echo_fill(t_cmd *cmd)
 
 int	ft_comm_check(t_cmd **cmd)
 {
-	int		i;
 	t_cmd	*tmp;
 	t_cmd	*last_cmd;
+
 	tmp = *cmd;
-	
 	while (tmp)
 	{
-		if ((tmp->cmd[0] == '<' || tmp->cmd[0] == '>') && tmp->active && tmp->args[0] == NULL)
+		if (ft_check_redir(tmp) && tmp->args[0] == NULL)
 			return (ft_print_syntaxerror());
-		if ((tmp->cmd[0]) == '|' && tmp->active && (tmp == *cmd || (last_cmd->cmd[0] == '|' && last_cmd->active)))
+		if (ft_check_pipe(tmp) && (tmp == *cmd || ft_check_pipe(last_cmd)))
 			return (ft_print_syntaxerror());
 		last_cmd = tmp;
 		tmp = tmp->next;
 	}
-	tmp = *cmd;
-	i = 1;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->cmd, "<<") == 0)
-		{
-			ft_create_new_file(tmp, i);
-			i++;
-		}
-		else if (!ft_strncmp_notregistr(tmp->cmd, "echo", 4))
-		{
-			ft_echo_fill(tmp);
-		}
-		tmp = tmp->next;
-	}
+	ft_change_double_red(cmd);
 	return (1);
 }
