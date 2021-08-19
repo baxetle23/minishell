@@ -29,8 +29,10 @@ int	search_name_comand(t_cmd *cmd, t_env *envp, char **o_env)
 	return (g_status_error);
 }
 
-void	init_infile_des(int *fd_in, int *save_in)
+void	init_infile_des(int *fd_in, int *save_in, t_cmd *cmd)
 {
+	if (ft_strncmp_nr("exit", cmd->cmd, 4))
+		g_status_error = 0;
 	*fd_in = 0;
 	*save_in = dup(STDIN_FILENO);
 }
@@ -41,7 +43,7 @@ int	find_comand(t_cmd *cmd, t_env *envp, char **o_env)
 	t_cmd	*tmp;
 	int		save_stdin;
 
-	init_infile_des(&fd_in, &save_stdin);
+	init_infile_des(&fd_in, &save_stdin, cmd);
 	tmp = cmd;
 	if (ft_strncmp_nr("<", tmp->cmd,
 			ft_strlen(tmp->cmd)) && find_revers_redirect(tmp))
@@ -71,7 +73,6 @@ int	mainalex(t_cmd **cmd_adres, t_env **env_adres, char **origin_env)
 
 	cmd = *cmd_adres;
 	env = *env_adres;
-	g_status_error = 0;
 	if (pipe_exist(cmd))
 		logic_pipe(cmd, env, origin_env, count_pipe(cmd) + 2);
 	else

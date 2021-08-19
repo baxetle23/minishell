@@ -61,7 +61,7 @@ int	check_path(t_cmd *cmd, t_env *envp)
 	tmp = envp;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, "PATH", 4 )
+		if (!ft_strncmp(tmp->key, "PATH", 4)
 			&& check_addres(envp, cmd->cmd))
 			return (0);
 		tmp = tmp->next;
@@ -76,7 +76,7 @@ int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env)
 {
 	int	pid;
 
-	if (check_path(cmd, envp))
+	if (!absolute_path(cmd->cmd) && check_path(cmd, envp))
 		return (g_status_error);
 	pid = fork();
 	if (pid < 0)
