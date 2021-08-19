@@ -86,7 +86,6 @@ void	ft_get_comm(t_words **words, t_cmd **cmd_input, int start, int old_st)
 {
 	t_cmd	*cmd;
 	char	*command;
-	char	*tmp;
 
 	cmd = NULL;
 	start = 0;

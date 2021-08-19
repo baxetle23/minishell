@@ -26,7 +26,7 @@ LIB		= $(DIRL)/libft.a
 
 CC		= gcc
 
-CFLAG	= #-Wall -Wextra -Werror
+CFLAG	= -Wall -Wextra -Werror
 
 RM		= rm -f
 
