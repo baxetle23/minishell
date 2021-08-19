@@ -30,7 +30,7 @@
 
 # define MANGEKENGOO "\xF0\x9F\x91\xBA:"
 # define EYES "\xF0\x9F\x81\x6E:"
-# define EYESES "<:\xF0\x9F\x91\x80:>"
+# define EYESES "<:\xF0\x9F\x91\x80:> "
 # define SKULL "\xF0\x9F\x92\x80:"
 # define GOST "\xF0\x9F\x91\xBB:"
 # define PUMPKIN "\xF0\x9F\x8E\x83:"
@@ -83,6 +83,17 @@ typedef struct s_pipex
 }			t_pipex;
 
 int		g_status_error;
+
+//readline
+char	*readline(const char *line);
+int		add_history(const char *line);
+int		rl_on_new_line(void);
+void	dl_redisplay(void);
+void	rl_replace_line(const char *buffer, int val);
+
+//signals
+
+void	ft_siginit(void);
 
 void	ft_add_all_redirects(t_words **words, int start, t_cmd **start_cmd);
 int		ft_count_red(t_words **words, int start);

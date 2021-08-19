@@ -1,22 +1,5 @@
 #include "../includes/minishell.h"
 
-void	ft_get_signals(int id)
-{
-	sigignore(SIGQUIT);
-	if (id == SIGINT)
-	{
-		write(1, "\n", 2);
-		rl_on_new_line();
-		rl_redisplay();
-		//rl_replace_line();
-		write(1, EYESES, 8);
-	}
-	if (id == SIGQUIT)
-	{
-		write(1, "\x1b[2D\n", 6);
-	}
-}
-
 int	ft_only_tabs(char *line)
 {
 	int	i;
@@ -35,7 +18,7 @@ int	ft_minishell(char *line, t_env **env, t_cmd **cmd, char **envir)
 {
 	if (line == NULL)
 	{
-		printf("exit\n");//\x1b[2D
+	//	write(1, "exit\n", 5);//\x1b[2D
 	//	rl_clear_hystory();
 		exit(0);
 	}
@@ -59,10 +42,9 @@ int	main(int argc, char **argv, char **envir)
 	(void) argv;
 	if (!ft_get_list_environments(envir, &env))
 		ft_terminate("malloc error");
-	signal(SIGINT, ft_get_signals);
-	sigignore(SIGQUIT);
 	while (1)
 	{
+		ft_siginit();
 		cmd = NULL;
 		ft_minishell(readline(EYESES), &env, &cmd, envir);
 	}
