@@ -18,8 +18,7 @@ int	ft_minishell(char *line, t_env **env, t_cmd **cmd, char **envir)
 {
 	if (line == NULL)
 	{
-	//	write(1, "exit\n", 5);//\x1b[2D
-	//	rl_clear_hystory();
+		write(1, "exit\n", 5);//\x1b[2D
 		exit(0);
 	}
 	if (line[0] != '\0' && !ft_only_tabs(line))

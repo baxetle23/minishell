@@ -94,6 +94,7 @@ void	rl_replace_line(const char *buffer, int val);
 //signals
 
 void	ft_siginit(void);
+void	ft_siginit_cat(void);
 
 void	ft_add_all_redirects(t_words **words, int start, t_cmd **start_cmd);
 int		ft_count_red(t_words **words, int start);
