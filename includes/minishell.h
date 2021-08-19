@@ -187,7 +187,9 @@ int		comand_revers_dredirect(t_cmd *cmd);
 int		comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
 
 void	call_execve_process(t_cmd *cmd, t_env *envp, char **o_env);
+void	check_minishell(char *name, char **o_env);
 int		check_path(t_cmd *cmd, t_env *envp);
+int		absolute_path(char *name_programm);
 void	free_memory(char **split1, char **split2);
 
 int		sort_env(t_env *env);

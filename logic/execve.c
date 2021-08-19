@@ -93,6 +93,7 @@ void	call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 	else
 		name_programm = get_addres(o_env, envp, cmd->cmd);
 	flags = get_flags(cmd);
+	check_minishell(name_programm, o_env);
 	execve(name_programm, flags, o_env);
 	exit (1);
 }
