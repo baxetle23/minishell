@@ -67,4 +67,3 @@ int	ft_check_last_word(char *check, t_words **words)
 		tmp = tmp->next;
 	return (ft_strcmp(check, tmp->word));
 }
-

@@ -50,7 +50,6 @@ int	ft_minishell(char *line, t_env **env, t_cmd **cmd, char **envir)
 	}
 	if (line[0] != '\0' && !ft_only_tabs(line))
 	{
-		//write(1, "a", 1);
 		add_history(line);
 		if (ft_checkline(line, env, cmd, envir))
 			return (0);
@@ -64,9 +63,9 @@ int	main(int argc, char **argv, char **envir)
 {
 	t_env	*env;
 	t_cmd	*cmd;
+
 	(void) argc;
 	(void) argv;
-
 	if (!ft_get_list_environments(envir, &env))
 		ft_terminate("malloc error");
 	signal(SIGINT, ft_get_signals);
@@ -75,11 +74,7 @@ int	main(int argc, char **argv, char **envir)
 	while (1)
 	{
 		cmd = NULL;
-		//ft_minishell(readline("\e[1;31mminishell\xF0\x9F\x91\x80:\e[0;37m"), &env, &cmd);
-		//write(1 ,"\e[1;31mminishell\xF0\x9F\x91\x80:\e[0;37m", 29);
-		//printf("-%s-", readline("\xF0\x9F\x91\x80:"));
 		ft_minishell(readline(EYESES), &env, &cmd, envir);
-		//ft_minishell(readline("\x1b[1;37mminishell\xF0\x9F\x91\x80:"), &env, &cmd);
 	}
 	return (0);
 }

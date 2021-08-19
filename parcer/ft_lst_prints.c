@@ -1,31 +1,30 @@
 #include "../includes/minishell.h"
 
+void	ft_print_mas(char **mas)
+{
+	int	i;
+
+	i = 0;
+	if (mas)
+	{
+		while (mas[i])
+			printf("%s\n", mas[i++]);
+	}
+	else
+		printf("doesn't exist\n");
+}
+
 void	ft_print_lst_cmds(t_cmd **cmd)
 {
 	t_cmd	*tmp;
-	int		i;
 
 	tmp = *cmd;
 	while (tmp)
 	{
 		printf("command: %s - active: %i\nflags:\n", tmp->cmd, tmp->active);
-		i = 0;
-		if (tmp->flags)
-		{
-			while (tmp->flags[i])
-				printf("-%s-\n", tmp->flags[i++]);
-		}
-		else
-			printf("flags doesn't exist\n");
+		ft_print_mas(tmp->flags);
 		printf("args:\n");
-		i = 0;
-		if (tmp->args)
-		{
-			while (tmp->args[i])
-				printf("%s\n", tmp->args[i++]);
-		}
-		else
-			printf("args doesn't exist\n");
+		ft_print_mas(tmp->args);
 		printf("//end//\n");
 		tmp = tmp->next;
 	}

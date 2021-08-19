@@ -36,7 +36,8 @@ void	ft_remove_files(t_cmd **cmd)
 	{
 		if (tmp->cmd[0] == '<')
 		{
-			if (!ft_strncmp(tmp->args[0], FILENAME, ft_strlen(FILENAME)))
+			if (tmp->args[0] && !ft_strncmp(tmp->args[0], FILENAME,
+					ft_strlen(FILENAME)))
 			{
 				printf("\nfile: %s\n", tmp->args[0]);
 				unlink(tmp->args[0]);
@@ -44,4 +45,13 @@ void	ft_remove_files(t_cmd **cmd)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	ft_clear_all(t_words **words, t_cmd **cmd, char *line, char *res_word)
+{
+	free(res_word);
+	free(line);
+	ft_remove_files(cmd);
+	ft_lstclear_words(words);
+	ft_lstclear_cmds(cmd);
 }
