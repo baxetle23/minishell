@@ -168,6 +168,8 @@ int		ft_is_pipe(t_words *tmp);
 int		ft_get_list_environments(char **e, t_env **env);
 t_env	*ft_find_list_env(char *find, t_env **env);
 
+void	ft_siginit_cat(void);
+
 //--------------------------------------------------------
 int		mainalex(t_cmd **cmd_adres, t_env **env, char **origin);
 
@@ -187,7 +189,7 @@ int		comand_revers_dredirect(t_cmd *cmd);
 int		comand_exve(t_cmd *cmd, t_env *envp, char **o_env);
 
 void	call_execve_process(t_cmd *cmd, t_env *envp, char **o_env);
-void	check_minishell(char *name, char **o_env);
+void	check_minishell(char *name, char **o_env, t_cmd *cmd);
 int		check_path(t_cmd *cmd, t_env *envp);
 int		absolute_path(char *name_programm);
 void	free_memory(char **split1, char **split2);

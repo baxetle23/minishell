@@ -52,11 +52,12 @@ void	plus_SHLVL(char **o_env)
 	o_env[i] = ft_strjoin("SHLVL=", ft_itoa(number));
 }
 
-void	check_minishell(char *name, char **o_env)
+void	check_minishell(char *name, char **o_env, t_cmd *cmd)
 {
 	int	last_sl;
 	int	i;
 
+	(void)cmd;
 	i = -1;
 	while (name[++i])
 		if (name[i] == '/')
