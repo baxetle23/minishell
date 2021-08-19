@@ -38,18 +38,21 @@ void	ebuchay_norma_sorry(int g_fd[2][2], int i, int argc, pid_t	*pids)
 		term1(pids, i, g_fd);
 }
 
+int	ebuchay_norma_sorry_2(int save, pid_t *pids)
+{
+	dup2(save, 0);
+	free (pids);
+	return (0);
+}
+
 int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 {
 	int		g_fd[2][2];
 	pid_t	*pids;
-	int		fd_in;
 	int		save_stdin;
 	int		i;
 
-	i = 0;
-	pids = malloc(sizeof(pid_t) * argc);
-	save_stdin = dup(STDIN_FILENO);
-	fd_in = 0;
+	init_for_pipe(&i, &pids, &save_stdin, argc);
 	if (pipe(g_fd[0]) == -1 || pipe(g_fd[1]) == -1)
 		exit(1);
 	while (++i < argc)
@@ -67,7 +70,5 @@ int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 		if (pipe(g_fd[i & 1]) == -1)
 			term1(pids, i, g_fd);
 	}
-	dup2(save_stdin, 0);
-	free (pids);
-	return (0);
+	return (ebuchay_norma_sorry_2(save_stdin, pids));
 }
