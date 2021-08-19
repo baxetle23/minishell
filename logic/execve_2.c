@@ -27,7 +27,7 @@ int	free_normi(t_pipex *a)
 	return (1);
 }
 
-int	check_addres(char **envp, t_env *my_envp, char *cmd_string)
+int	check_addres(t_env *my_envp, char *cmd_string)
 {
 	t_pipex	a;
 	t_env	*path;
@@ -54,7 +54,7 @@ int	check_addres(char **envp, t_env *my_envp, char *cmd_string)
 	return (0);
 }
 
-int	check_path(t_cmd *cmd, t_env *envp, char **o_env)
+int	check_path(t_cmd *cmd, t_env *envp)
 {
 	t_env	*tmp;
 
@@ -62,7 +62,7 @@ int	check_path(t_cmd *cmd, t_env *envp, char **o_env)
 	while (tmp)
 	{
 		if (!ft_strncmp(tmp->key, "PATH", 4 )
-			&& check_addres(o_env, envp, cmd->cmd))
+			&& check_addres(envp, cmd->cmd))
 			return (0);
 		tmp = tmp->next;
 	}
@@ -76,7 +76,7 @@ int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env)
 {
 	int	pid;
 
-	if (check_path(cmd, envp, o_env))
+	if (check_path(cmd, envp))
 		return (g_status_error);
 	pid = fork();
 	if (pid < 0)

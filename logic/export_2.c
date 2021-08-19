@@ -68,7 +68,7 @@ void	print_sort_envp(t_env *envp, int fd)
 		{
 			ft_putstr_fd("declare -x ", fd);
 			ft_putstr_fd(tmp->key, fd);
-			ft_putstr_fd("=\"\n", fd);
+			ft_putstr_fd("=\"\"\n", fd);
 		}
 		tmp = tmp->next;
 	}

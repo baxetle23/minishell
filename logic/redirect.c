@@ -67,7 +67,6 @@ int	get_fd_redirecta(t_cmd *redirect)
 
 int	find_file_des(t_cmd *cmd)
 {
-	int		fd;
 	t_cmd	*redirect;
 
 	redirect = find_redirect(cmd);

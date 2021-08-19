@@ -91,7 +91,6 @@ int	first_call_cd(t_cmd *cmd, t_env *envp, char *oldpath)
 
 int	comand_cd(t_cmd *cmd, t_env *envp)
 {
-	t_env	*tmp;
 	char	oldpath[10000];
 
 	if (count_arg_cd(cmd) != 1)

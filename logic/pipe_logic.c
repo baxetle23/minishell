@@ -8,7 +8,7 @@ void	close_fd(int g_fd[2][2])
 	close(g_fd[1][1]);
 }
 
-void	logic_pipe_execute(pid_t *pids, int g_fd[2][2], int i, int argc)
+void	logic_pipe_execute(int g_fd[2][2], int i, int argc)
 {
 	close(g_fd[i & 1][1]);
 	close(g_fd[1 - (i & 1)][0]);
@@ -62,7 +62,7 @@ int	logic_pipe(t_cmd *cmd, t_env *env, char **origin_env, int argc)
 			term(pids, i - 1, g_fd);
 		if (!pids[i])
 		{
-			logic_pipe_execute(&pids[i], g_fd, i, argc);
+			logic_pipe_execute(g_fd, i, argc);
 			cmd = get_cmd(cmd, i);
 			exit(find_comand(cmd, env, origin_env));
 		}
