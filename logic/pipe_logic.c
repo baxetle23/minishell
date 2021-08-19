@@ -28,10 +28,7 @@ void	ebuchay_norma_sorry(int g_fd[2][2], int i, int argc, pid_t	*pids)
 	close(g_fd[i & 1][0]);
 	close(g_fd[i & 1][1]);
 	wait(&g_status_error);
-	if (g_status_error > 127)
-		g_status_error = 256 - WEXITSTATUS(g_status_error);
-	else
-		g_status_error = WEXITSTATUS(g_status_error);
+	g_status_error = WEXITSTATUS(g_status_error);
 	if (i == argc - 1)
 		close_fd(g_fd);
 	if (pipe(g_fd[i & 1]) == -1)

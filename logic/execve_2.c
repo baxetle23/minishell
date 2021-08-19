@@ -78,6 +78,7 @@ int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env)
 
 	if (!absolute_path(cmd->cmd) && check_path(cmd, envp))
 		return (g_status_error);
+	ft_siginit_cat();
 	pid = fork();
 	if (pid < 0)
 		exit (1);
