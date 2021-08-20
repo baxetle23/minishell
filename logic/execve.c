@@ -95,5 +95,7 @@ void	call_execve_process(t_cmd *cmd, t_env *envp, char **o_env)
 	flags = get_flags(cmd);
 	check_minishell(name_programm, o_env, cmd);
 	execve(name_programm, flags, o_env);
-	exit (1);
+	ft_putstr_fd(name_programm, 2);
+	ft_putendl_fd(": No such file or directory", 2);
+	exit (127);
 }
