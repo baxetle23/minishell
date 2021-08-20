@@ -2,19 +2,44 @@
 
 int	check_many_arg_ex(t_cmd *cmd)
 {
-	(void)cmd;
-	return (0);
+	int	i;
+
+	i = -1;
+	while (cmd->args[0][++i])
+	{
+		if ((cmd->args[0][i] == '-' && i == 0) || ft_isdigit(cmd->args[0][i]))
+			continue ;
+		g_status_error = 255;
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putendl_fd(": numeric argument required", 2);
+		exit (g_status_error);
+	}
+	ft_putendl_fd("exit: too many arguments", 2);
+	g_status_error = 1;
+	return (g_status_error);
 }
 
 int	check_one_arg_ex(t_cmd *cmd)
 {
-	int	fd;
+	int	i;
 
-	fd = ft_atoi(cmd->args[0]);
-	if (fd > 255)
-		exit(WEXITSTATUS(fd) - 1);
+	i = -1;
+	while (cmd->args[0][++i])
+	{
+		if ((cmd->args[0][i] == '-' && i == 0) || ft_isdigit(cmd->args[0][i]))
+			continue ;
+		g_status_error = 255;
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(cmd->args[0], 2);
+		ft_putendl_fd(": numeric argument required", 2);
+		exit (g_status_error);
+	}
+	i = ft_atoi(cmd->args[0]);
+	if (i > 255)
+		exit(WEXITSTATUS(i) - 1);
 	else
-		exit(fd);
+		exit(i);
 }
 
 int	comand_exit(t_cmd *cmd)
@@ -29,7 +54,7 @@ int	comand_exit(t_cmd *cmd)
 	}
 	ft_putendl_fd("exit", 1);
 	if (cmd->args && cmd->args[0] && cmd->args[1])
-		check_many_arg_ex(cmd);
+		return (check_many_arg_ex(cmd));
 	else if (cmd->args && cmd->args[0])
 		check_one_arg_ex(cmd);
 	else
