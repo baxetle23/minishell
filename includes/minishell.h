@@ -188,8 +188,12 @@ void	ft_terminate(char *s);
 void	ft_remove_files(t_cmd **cmd);
 void	ft_clear_all(t_words **words, t_cmd **cmd, char *line, char *res_word);
 
+//ft_utils_other.c
+
 int		ft_is_redirect(t_words *tmp);
 int		ft_is_pipe(t_words *tmp);
+int		ft_is_space(char c);
+char	*ft_dollar_others(char *line, int *i, int j);
 
 int		ft_get_list_environments(char **e, t_env **env);
 t_env	*ft_find_list_env(char *find, t_env **env);

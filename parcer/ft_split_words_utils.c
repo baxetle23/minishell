@@ -16,16 +16,9 @@ char	*ft_dollar(int *i, char *line, t_env **env)
 	char	*find;
 
 	j = *i + 1;
-	if (line[j] == '$')
-	{
-		*i = j + 1;
-		return (ft_itoa(getpid()));
-	}
-	else if (line[j] == '?')
-	{
-		*i = j + 1;
-		return (ft_itoa(g_status_error));
-	}
+	if (line[j] == '$' || line[j] == '?'
+		|| (line[j] == '\0' || ft_is_space(line[j])))
+		return (ft_dollar_others(line, i, j));
 	while ((ft_isalpha(line[j]) || ft_isdigit(line[j]) || line[j] == '_')
 		&& line[j] != '\0')
 		j++;

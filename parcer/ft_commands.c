@@ -88,6 +88,8 @@ void	ft_get_comm(t_words **words, t_cmd **cmd_input, int start, int old_st)
 	char	*command;
 
 	cmd = NULL;
+	if (*words == NULL)
+		return ;
 	start = 0;
 	while (start < ft_lst_words_length(words))
 	{

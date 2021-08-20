@@ -49,11 +49,13 @@ int	ft_addword(char *word, t_words **lst, int active)
 {
 	t_words	*new;
 
+	if (word == NULL)
+		return (1);
 	new = ft_lstnew_word(word, active);
 	if (!new)
-		return (0);
+		return (1);
 	ft_lstadd_word(lst, new);
-	return (1);
+	return (0);
 }
 
 int	ft_check_last_word(char *check, t_words **words)

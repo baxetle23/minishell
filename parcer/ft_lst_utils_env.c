@@ -61,5 +61,5 @@ char	*ft_env_search(char *find, t_env **env)
 		buf = buf->next;
 	}
 	free(find);
-	return (ft_strdup(""));
+	return (NULL);
 }
