@@ -48,7 +48,6 @@ void	plus_SHLVL(char **o_env)
 			break ;
 		}
 	}
-	number = ft_atoi(&(o_env[i][j + 1])) + 1;
 	o_env[i] = ft_strjoin("SHLVL=", ft_itoa(number));
 }
 
