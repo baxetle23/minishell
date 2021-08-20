@@ -22,7 +22,25 @@ SORCES	=	ft_comm_redirect_utils.c \
 			ft_utils.c \
 			minishell.c
 
-ALEXS = alexmain.c utils.c comands.c output.c redirect.c echo.c cd.c ft_lst_utils.c pwd.c env.c export.c execve.c unset.c revers_redirect.c pipe.c execve_2.c export_2.c pipe_logic.c
+ALEXS = alexmain.c\
+		utils.c\
+		comands.c\
+		output.c\
+		redirect.c\
+		echo.c\
+		cd.c\
+		ft_lst_utils.c\
+		pwd.c\
+		env.c\
+		export.c\
+		execve.c\
+		unset.c\
+		revers_redirect.c\
+		pipe.c\
+		execve_2.c\
+		export_2.c\
+		pipe_logic.c\
+		exit.c\
 
 ALEXDIRS = ./logic
 
