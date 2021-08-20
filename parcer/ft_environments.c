@@ -22,6 +22,9 @@ int	ft_get_list_environments(char **e, t_env **env)
 	i = -1;
 	while (e[++i])
 	{
+		if (!ft_strncmp(e[i], "SHLVL", 5) && e[i][5] == '='
+			&& e[i][6] == '1' && e[i][7] == '\0')
+			e[i][6] = '2';
 		new = ft_lstnew_env(e[i]);
 		if (!new)
 		{
