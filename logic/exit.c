@@ -20,7 +20,26 @@ int	check_many_arg_ex(t_cmd *cmd)
 	return (g_status_error);
 }
 
-int	check_one_arg_ex(t_cmd *cmd)
+void	check_number_exit(char *number)
+{
+	int	i;
+
+	if (ft_strlen(number) > 20)
+	{
+		g_status_error = 255;
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(number, 2);
+		ft_putendl_fd(": numeric argument required", 2);
+		exit (g_status_error);
+	}
+	i = ft_atoi(number);
+	if (i > 255)
+		exit(WEXITSTATUS(i) - 1);
+	else
+		exit(i);
+}
+
+void	check_one_arg_ex(t_cmd *cmd)
 {
 	int	i;
 
@@ -35,11 +54,7 @@ int	check_one_arg_ex(t_cmd *cmd)
 		ft_putendl_fd(": numeric argument required", 2);
 		exit (g_status_error);
 	}
-	i = ft_atoi(cmd->args[0]);
-	if (i > 255)
-		exit(WEXITSTATUS(i) - 1);
-	else
-		exit(i);
+	check_number_exit(cmd->args[0]);
 }
 
 int	comand_exit(t_cmd *cmd)

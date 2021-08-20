@@ -40,7 +40,7 @@ ALEXS = alexmain.c\
 		execve_2.c\
 		export_2.c\
 		pipe_logic.c\
-		exit.c\
+		exit.c
 
 ALEXDIRS = ./logic
 
