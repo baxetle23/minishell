@@ -75,7 +75,9 @@ int	check_path(t_cmd *cmd, t_env *envp)
 int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env)
 {
 	int	pid;
+	int err;
 
+	err = 0;
 	if (!absolute_path(cmd->cmd) && check_path(cmd, envp))
 		return (g_status_error);
 	ft_siginit_cat();
@@ -86,7 +88,9 @@ int	comand_exve(t_cmd *cmd, t_env *envp, char **o_env)
 	{
 		call_execve_process(cmd, envp, o_env);
 	}
-	wait(&g_status_error);
-	g_status_error = WEXITSTATUS(g_status_error);
+	//wait(&g_status_error);
+	waitpid(pid, &err, WUNTRACED | WCONTINUED);
+	g_status_error = WEXITSTATUS(err);
+	printf("%i\n", g_status_error);
 	return (g_status_error);
 }

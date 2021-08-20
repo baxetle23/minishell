@@ -93,25 +93,42 @@ void	rl_replace_line(const char *buffer, int val);
 
 //signals
 
+void	ft_ctrl_c(int id);
+void	ft_ctrl_c_cat(int id);
+void	ft_ctrl_d(int id);
+void	ft_ctrl_bs_cat(int id);
+
+//signals inits
+
 void	ft_siginit(void);
 void	ft_siginit_cat(void);
+
+//ft_comm_redirect_utils.c
 
 void	ft_add_all_redirects(t_words **words, int start, t_cmd **start_cmd);
 int		ft_count_red(t_words **words, int start);
 void	ft_change_double_red(t_cmd **cmd);
 
+//ft_commands_checks.c
+
 int		ft_create_new_file(t_cmd *cur, int i);
 int		ft_comm_check(t_cmd **cmd);
 void	ft_echo_fill(t_cmd *cmd);
+
+//ft_split_words.c
 
 int		ft_checkline(char *line, t_env **env, t_cmd **cmd, char **envir);
 int		ft_check_redir(t_cmd *tmp);
 int		ft_check_pipe(t_cmd *tmp);
 
+//ft_str_utils.c
+
 char	*ft_strdup_part(const char *s1, int start, int len);
 char	*ft_strjoin_m(char *s1, char *s2);
 void	ft_switch_spaces(int *i, char *line);
 int		ft_spec_char(char c);
+
+//ft_lst_prints.c
 
 void	ft_print_lst_words(t_words **words);
 void	ft_print_lst_cmds(t_cmd **cmd);
@@ -143,19 +160,27 @@ void	ft_lstclear_env(t_env **env);
 char	*ft_env_search(char *find, t_env **env);
 int		ft_check_last_word(char *check, t_words **words);
 
+//ft_lst_clear.c
+
 int		ft_lst_words_length(t_words **words);
 t_words	*ft_lstnew_word(char *s, int acitve);
 void	ft_lstadd_word(t_words **lst, t_words *new);
 int		ft_addword(char *word, t_words **lst, int active);
 void	ft_lstclear_words(t_words **env);
 
+//ft_other_prints.c
+
 int		ft_print_syntaxerror(void);
+
+//ft_split_words_utils.c
 
 void	ft_pipe(int *i, char *line, t_words **words);
 char	*ft_dollar(int *i, char *line, t_env **env);
 char	*ft_char(int *i, char *line, t_env **env);
 char	*ft_upostr(int *i, char *line);
 char	*ft_kavichki(int *i, char *line, t_env **env);
+
+//ft_utils.c
 
 char	**get_empty_m(void);
 void	ft_free_mas(char **t);

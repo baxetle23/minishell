@@ -70,7 +70,7 @@ void	ft_change_double_red(t_cmd **cmd)
 	i = 1;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->cmd, "<<") == 0)
+		if (ft_strcmp(tmp->cmd, "<<") == 0 && tmp->active)
 		{
 			ft_create_new_file(tmp, i);
 			i++;
