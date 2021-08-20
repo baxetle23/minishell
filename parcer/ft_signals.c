@@ -18,7 +18,6 @@ void	ft_ctrl_c_cat(int id)
 	(void) id;
 	write (1, "\n", 1);
 	g_status_error = 130;
-	printf("%i", g_status_error);
 }
 
 void	ft_ctrl_d(int id)
